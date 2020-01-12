@@ -1,4 +1,6 @@
 import { IsString } from 'class-validator';
+import { Idea } from '../interfaces/idea.model';
+import { User } from 'src/user/models/user.model';
 
 export class IdeaDTO {
     @IsString()
@@ -7,3 +9,4 @@ export class IdeaDTO {
     @IsString()
     description: string;
 }
+

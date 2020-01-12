@@ -1,15 +1,24 @@
 import {
     Controller, Get, Post, Put,
-    Delete, Body, Param, UsePipes,
+    Delete, Body, Param, UsePipes, Patch, Logger, UseGuards,
 } from '@nestjs/common';
 import { IdeaService } from './idea.service';
 import { IdeaDTO } from './dto/create-idea.dto';
 import { ValidationPipe } from '../shared/validation.pipe';
+import { MyAuthGuard } from 'src/shared/gaurds/auth.gaurd';
+import { User } from 'src/user/user.decorator';
 
-@Controller('idea')
+@Controller('api/idea')
 export class IdeaController {
 
+    private logger = new Logger('IdeaController');
     constructor(private ideaService: IdeaService) {
+    }
+
+    private logData(options: any) {
+        options.id && this.logger.log('USER' + JSON.stringify(options.user));
+        options.id && this.logger.log('DATA' + JSON.stringify(options.body));
+        options.id && this.logger.log('IDEA' + JSON.stringify(options.id));
     }
 
     @Get()
@@ -18,25 +27,31 @@ export class IdeaController {
     }
 
     @Post()
+    @UseGuards(new MyAuthGuard())
     @UsePipes(new ValidationPipe())
-    createIdea(@Body() data: IdeaDTO) {
-        return this.ideaService.create(data);
+    async createIdea(@User('sub') user, @Body() data: IdeaDTO) {
+        this.logData({ user, data });
+        return await this.ideaService.create(user, data);
     }
 
     @Get(':id')
-    readIdea(@Param('id') id: string) {
-        return this.ideaService.read(id);
+    async readIdea(@Param('id') id: string) {
+        return await this.ideaService.read(id);
     }
 
-    @Put(':id')
+    @Patch(':id')
+    @UseGuards(new MyAuthGuard())
     @UsePipes(new ValidationPipe())
-    updateIdea(@Param('id') id: string, @Body() data: Partial<IdeaDTO>) {
-        return this.ideaService.update(id, data);
+    updateIdea(@Param('id') id: string, @User('sub') user: string, @Body() data: Partial<IdeaDTO>) {
+        this.logData({ id, user, data });
+        return this.ideaService.update(id, user, data);
     }
 
     @Delete(':id')
-    destroyIdea(@Param('id') id: string) {
-        return this.ideaService.destroy(id);
+    @UseGuards(new MyAuthGuard())
+    destroyIdea(@Param('id') id: string, @User('sub') user: string) {
+        this.logData({ id, user });
+        return this.ideaService.destroy(id, user);
     }
 
 }
