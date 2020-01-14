@@ -18,7 +18,7 @@ dotenv.config();
         PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
             secretOrPrivateKey: jwtConstants.secret,
-            signOptions: { expiresIn: '1h' },
+            signOptions: { expiresIn: '7d' },
         }),
     ],
     providers: [AuthService, JwtStrategy],

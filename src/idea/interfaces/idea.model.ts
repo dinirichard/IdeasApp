@@ -8,7 +8,22 @@ export const IdeaSchema = new mongoose.Schema({
     updated: { type: Date, default: Date.now },
     idea: { type: String, required: true },
     description: { type: String },
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User', required: true,
+    },
+    upvotes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User', unique: true,
+        },
+    ],
+    downvotes: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User', unique: true,
+        },
+    ],
 });
 
 export interface Idea extends mongoose.Document {
@@ -18,6 +33,9 @@ export interface Idea extends mongoose.Document {
     author: User;
     idea: string;
     description: string;
+    upvotes: User[];
+    downvotes: User[];
+
     responseFormat(): IdeaRO;
 }
 

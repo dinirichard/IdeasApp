@@ -5,28 +5,25 @@ import { Model } from 'mongoose';
 import { User } from './models/user.model';
 import { JwtService } from '@nestjs/jwt';
 import { UserRO } from './dto/user.res.dto';
+import { Idea } from 'src/idea/interfaces/idea.model';
+import { IdeaRO } from 'src/idea/dto/idea.response.dto';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectModel('User') private readonly userModel: Model<User>,
-        private readonly jwtService: JwtService, ) { }
+        @InjectModel('Idea') private readonly ideaModel: Model<Idea>,
+        private readonly jwtService: JwtService,
+    ) { }
 
     async showAll() {
-        const users = await this.userModel.find().populate('ideas', '-created');
+        const users = await this.userModel.find()
+            .populate('ideas', '-created')
+            .populate('bookmarks', '-created');
 
-        return users.map((user) => ({
-            id: user.id,
-            created: user.created,
-            username: user.username,
-            idea: user.ideas.map((idea) => ({
-                id: idea.id,
-                idea: idea.idea,
-                desc: idea.description,
-                created: idea.created,
-            }),
-            ),
-        })
+        return users.map((user) => {
+            return this.toResponseObject(user);
+        }
         );
     }
 
@@ -39,7 +36,7 @@ export class UserService {
             throw new HttpException('Invalid Password!!', HttpStatus.BAD_REQUEST);
         }
         await user.populate('ideas');
-        const { password, ...result } = user;    // use a convenient ES6 spread operator 
+        const { password, ...result } = user;    // use a convenient ES6 spread operator
         // to strip the password property from the user object before returning it
         return user;
     }
@@ -63,21 +60,46 @@ export class UserService {
         };
     }
 
-    // private toResponseObject(user: User): UserRO {
-    //     const userRo: UserRO = {
-    //         id: user.id,
-    //         username: user.username,
-    //         created: user.created,
-    //         ideas: user.ideas.map((idea) =>
-    //             ({
-    //                 id: idea.id,
-    //                 idea: idea.idea,
-    //                 description: idea.description,
-    //                 updated: idea.updated,
-    //             }),
-    //     };
+    toResponseObject(user: User): UserRO {
+        const checkForIdeas = user.ideas.toString().split(':');
+        const checkForBookmarks = user.bookmarks.toString().split(':');
+        // console.log(ide);
+        let ideas;
+        let bookmarkers;
+        const userRo: UserRO = {
+            id: user.id,
+            username: user.username,
+            created: user.created,
+        };
 
-    //     return userRo;
-    // }
+        if (user.ideas.length >= 1) {
+            if (checkForIdeas.length > 2) {
+                ideas = user.ideas.map((idea): IdeaRO =>
+                    ({
+                        id: idea.id,
+                        idea: idea.idea,
+                        description: idea.description,
+                        updated: idea.updated,
+                    }));
+                userRo.ideas = ideas;
+            }
+        }
+
+        if (user.bookmarks.length >= 1) {
+            if (checkForBookmarks.length > 2) {
+                bookmarkers = user.bookmarks.map((bookmark): IdeaRO =>
+                    ({
+                        idea: bookmark.idea,
+                        updated: bookmark.updated,
+                        description: bookmark.description,
+                    }),
+                );
+
+                userRo.bookmarks = bookmarkers;
+            }
+
+        }
+        return userRo;
+    }
 
 }

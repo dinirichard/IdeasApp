@@ -13,14 +13,14 @@ export const UserSchema = new mongoose.Schema({
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Idea',
-        }
+        },
     ],
     bookmarks: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Idea',
-        }
-    ]
+        },
+    ],
 });
 
 UserSchema.pre<User>('save', function (next) {
@@ -31,17 +31,6 @@ UserSchema.pre<User>('save', function (next) {
     }
     user.password = bcrypt.hashSync(user.password, 10);
     next();
-});
-
-UserSchema.method('responseFormat', function (): UserRO {
-    const user: User = this;
-    const res: UserRO = {
-        id: user.id,
-        username: user.username,
-        created: user.created,
-        ideas: user.ideas,
-    };
-    return res;
 });
 
 UserSchema.method('comparePassword', function (password: string): boolean {
@@ -57,6 +46,7 @@ export interface User extends mongoose.Document {
     username: string;
     password: string;
     ideas: Idea[];
+    bookmarks: Idea[];
 
     comparePassword(password: string): boolean;
 
