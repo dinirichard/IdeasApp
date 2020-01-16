@@ -1,6 +1,9 @@
 import * as mongoose from 'mongoose';
 import { User } from 'src/user/models/user.model';
 import { IdeaRO } from '../dto/idea.response.dto';
+import { Comment } from 'src/comment/models/comment.model';
+import { CommentController } from 'src/comment/comment.controller';
+import { CommentRO } from 'src/comment/dto/comment.res.dto';
 
 // Uses javascript types and style
 export const IdeaSchema = new mongoose.Schema({
@@ -24,20 +27,13 @@ export const IdeaSchema = new mongoose.Schema({
             ref: 'User', unique: true,
         },
     ],
+    comments: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Comment',
+        },
+    ],
 });
-
-export interface Idea extends mongoose.Document {
-    id: string;
-    created: Date;
-    updated: Date;
-    author: User;
-    idea: string;
-    description: string;
-    upvotes: User[];
-    downvotes: User[];
-
-    responseFormat(): IdeaRO;
-}
 
 IdeaSchema.pre<Idea>('save', function (next) {
     const idea = this;
@@ -56,7 +52,20 @@ IdeaSchema.method('responseFormat', function (): IdeaRO {
         updated: idea.updated,
         idea: idea.idea,
         description: idea.description,
-        author: idea.author.responseFormat(),
     };
     return res;
 });
+
+export interface Idea extends mongoose.Document {
+    id: string;
+    created: Date;
+    updated: Date;
+    author: User;
+    idea: string;
+    description: string;
+    upvotes: User[];
+    downvotes: User[];
+    comments: Comment[];
+
+    responseFormat(): IdeaRO;
+}

@@ -1,5 +1,5 @@
-import { User } from 'src/user/models/user.model';
 import { UserRO } from 'src/user/dto/user.res.dto';
+import { CommentRO } from 'src/comment/dto/comment.res.dto';
 
 export class IdeaRO {
     id?: string;
@@ -10,4 +10,5 @@ export class IdeaRO {
     author?: UserRO;
     upvotes?: number;
     downvotes?: number;
+    comments?: CommentRO[];
 }

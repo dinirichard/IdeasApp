@@ -7,6 +7,7 @@ import { User } from 'src/user/models/user.model';
 import { IdeaRO } from './dto/idea.response.dto';
 import { UserService } from 'src/user/user.service';
 import { Votes } from 'src/shared/votes.enum';
+import { CommentRO } from 'src/comment/dto/comment.res.dto';
 
 @Injectable()
 export class IdeaService {
@@ -16,9 +17,21 @@ export class IdeaService {
         private userService: UserService,
     ) { }
 
-    async showAll(): Promise<IdeaRO[]> {
-        const ideas = await this.ideaModel.find()
-            .populate('author', '-password');
+    async showAll(page: number = 1, newest: boolean = false): Promise<IdeaRO[]> {
+
+        let ideas;
+        if (!newest) {
+            ideas = await this.ideaModel.find()
+                .limit(25).skip(25 * (page - 1))
+                .populate('author', '-password')
+                .populate('comments');
+        } else {
+            ideas = await this.ideaModel.find()
+                .limit(25).skip(25 * (page - 1))
+                .sort({ created: 'desc' })
+                .populate('author', '-password')
+                .populate('comments');
+        }
 
         return ideas.map((idea) => {
             return this.toResponseObject(idea);
@@ -43,8 +56,9 @@ export class IdeaService {
         const idea = await this.findIdea(id);
         const full = await idea
             .populate('author', '-password')
-            // .populate('upvotes', '-password')
-            // .populate('downvotes', '-password')
+            .populate('upvotes', '-password')
+            .populate('downvotes', '-password')
+            .populate('comments')
             .execPopulate();
         return this.toResponseObject(full);
     }
@@ -53,7 +67,7 @@ export class IdeaService {
         id: string,
         userId: string,
         data: Partial<IdeaDTO>): Promise<IdeaRO> {  // 'Partial' dont expect entire object
-        const updatedIdea = await this.findIdea(id);
+        const updatedIdea = await (await this.findIdea(id)).populate('comments');
         // await updatedIdea.populate('author', '-password');
         if (data.idea) {
             updatedIdea.idea = data.idea;
@@ -68,7 +82,7 @@ export class IdeaService {
     }
 
     async destroy(id: string, userId: string) {
-        const updatedIdea = await this.findIdea(id);
+        const updatedIdea = await (await this.findIdea(id)).populate('comments');
         this.ensureOwnership(updatedIdea, userId);
         const result = await this.ideaModel.deleteOne({ _id: id }).exec();
         if (result.n === 0) {
@@ -80,7 +94,8 @@ export class IdeaService {
     async upvote(id: string, userId: string) {
         let idea = await this.ideaModel.findOne({ _id: id })
             .populate('upvotes', '-password')
-            .populate('downvotes', '-password');
+            .populate('downvotes', '-password')
+            .populate('comments');
         const user = await this.userModel.findById(userId);
 
         idea = await this.vote(idea, user, Votes.UP);
@@ -90,7 +105,8 @@ export class IdeaService {
     async downvote(id: string, userId: string) {
         let idea = await this.ideaModel.findById(id)
             .populate('upvotes', '-password')
-            .populate('downvotes', '-password');
+            .populate('downvotes', '-password')
+            .populate('comments');
         const user = await this.userModel.findById(userId);
 
         idea = await this.vote(idea, user, Votes.DOWN);
@@ -183,6 +199,7 @@ export class IdeaService {
 
     private toResponseObject(idea: Idea): IdeaRO {
         let author;
+        const checkForComments = idea.comments.toString().split(':');
 
         const ideaRo: IdeaRO = {
             id: idea.id,
@@ -203,6 +220,17 @@ export class IdeaService {
                 };
                 ideaRo.author = author;
             }
+        }
+
+        if (idea.comments.length >= 1) {
+            if (checkForComments.length > 2) {
+                const comments = idea.comments.map((comment): CommentRO =>
+                    comment.responseFormat(),
+                );
+
+                ideaRo.comments = comments;
+            }
+
         }
 
         return ideaRo;

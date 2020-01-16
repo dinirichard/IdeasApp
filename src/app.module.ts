@@ -1,3 +1,4 @@
+import { CommentModule } from './comment/comment.module';
 import { AuthModule } from './shared/auth/auth.module';
 import { UserModule } from './user/user.module';
 import { IdeaModule } from './idea/idea.module';
@@ -10,11 +11,19 @@ import { HttpErrorFilter } from './shared/http-error.filter';
 import { LoggingInterceptor } from './shared/logging.interceptor';
 import { ConfigModule } from 'nestjs-dotenv';
 
+import * as mongoose from 'mongoose';
+mongoose.set('useCreateIndex', true);
+
 @Module({
   imports: [
-    AuthModule,
-    UserModule, IdeaModule, MongooseModule.forRoot(
+    CommentModule, AuthModule,
+    UserModule, IdeaModule,
+    MongooseModule.forRoot(
       'mongodb+srv://m001-student:m001-mongodb-basics@sandbox-cehti.azure.mongodb.net/ideas-app?retryWrites=true&w=majority',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
     ),
     ConfigModule.forRoot(),
   ],
