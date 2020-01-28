@@ -3,19 +3,30 @@ import { Injectable, CanActivate, ExecutionContext, HttpException, HttpStatus, I
 import { jwtConstants } from '../auth/constants';
 import * as jwt from 'jsonwebtoken';
 import { JwtService } from '@nestjs/jwt';
+import { GqlExecutionContext } from '@nestjs/graphql';
 
 @Injectable()
 export class MyAuthGuard implements CanActivate {
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
-        if (!request.headers.authorization) {
-            return false;
+        if (request) {
+            if (!request.headers.authorization) {
+                return false;
+            }
+
+            request.user = await this.validateToken(request.headers.authorization);
+            return true;
+        }
+        else {
+            const ctx: any = GqlExecutionContext.create(context).getContext();
+            if (!ctx.headers.authorization) {
+                return false;
+            }
+            ctx.user = await this.validateToken(ctx.headers.authorization);
+            return true;
         }
 
-        request.user = await this.validateToken(request.headers.authorization);
-        console.log(request.user);
-        return true;
     }
 
     async validateToken(auth: string) {

@@ -16,8 +16,9 @@ export class UserService {
         private readonly jwtService: JwtService,
     ) { }
 
-    async showAll() {
+    async showAll(page: number = 1) {
         const users = await this.userModel.find()
+            .limit(25).skip(25 * (page - 1))
             .populate('ideas', '-created')
             .populate('bookmarks', '-created');
 
@@ -25,6 +26,14 @@ export class UserService {
             return this.toResponseObject(user);
         }
         );
+    }
+
+    async read(username: string) {
+        const user = await this.userModel.findOne({ username }).exec();
+        user.populate('ideas', '-created')
+            .populate('bookmarks', '-created');
+
+        return this.toResponseObject(user);
     }
 
     async validateUser(data: UserDTO) {
@@ -55,7 +64,6 @@ export class UserService {
         const payload = { username: result.username, sub: result.id };
         return {
             username: result.username,
-            password: result.password,
             access_token: this.jwtService.sign(payload),
         };
     }
@@ -63,7 +71,6 @@ export class UserService {
     toResponseObject(user: User): UserRO {
         const checkForIdeas = user.ideas.toString().split(':');
         const checkForBookmarks = user.bookmarks.toString().split(':');
-        // console.log(ide);
         let ideas;
         let bookmarkers;
         const userRo: UserRO = {

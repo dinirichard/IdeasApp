@@ -6,6 +6,7 @@ import { UserSchema } from 'src/user/models/user.model';
 import { IdeaSchema } from 'src/idea/interfaces/idea.model';
 import { CommentSchema } from './models/comment.model';
 import { UserModule } from 'src/user/user.module';
+import { CommentResolver } from './comment.resolver';
 
 @Module({
     imports: [MongooseModule.forFeature([
@@ -16,6 +17,6 @@ import { UserModule } from 'src/user/user.module';
         UserModule,
     ],
     controllers: [CommentController],
-    providers: [CommentService],
+    providers: [CommentService, CommentResolver],
 })
 export class CommentModule { }

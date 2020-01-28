@@ -1,3 +1,4 @@
+import { GraphQLModule } from '@nestjs/graphql';
 import { CommentModule } from './comment/comment.module';
 import { AuthModule } from './shared/auth/auth.module';
 import { UserModule } from './user/user.module';
@@ -18,6 +19,10 @@ mongoose.set('useCreateIndex', true);
   imports: [
     CommentModule, AuthModule,
     UserModule, IdeaModule,
+    GraphQLModule.forRoot({
+      typePaths: ['./**/*.graphql'],
+      context: ({ req }) => ({ headers: req.headers }),
+    }),
     MongooseModule.forRoot(
       'mongodb+srv://m001-student:m001-mongodb-basics@sandbox-cehti.azure.mongodb.net/ideas-app?retryWrites=true&w=majority',
       {

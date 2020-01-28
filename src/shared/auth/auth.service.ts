@@ -13,10 +13,11 @@ export class AuthService {
 
     async login(data: any) {
         const user = await this.userService.validateUser(data);
-        console.log(JSON.stringify(user));
+        // console.log(JSON.stringify(user));
         const payload = { username: user.username, sub: user.id };
         // console.log(JSON.stringify(payload));
         return {
+            username: user.username,
             access_token: this.jwtService.sign(payload),
         };
     }
