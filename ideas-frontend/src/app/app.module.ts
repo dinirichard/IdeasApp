@@ -10,6 +10,8 @@ import { ApiService } from '@app/services/api.service';
 import { AppStoreModule } from './store/app-store.module';
 import { AuthComponent } from './components/auth/auth.component';
 import { UiModule } from './ui.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,13 @@ import { UiModule } from './ui.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    UiModule
+    UiModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 1000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true,
+    })
   ],
   providers: [AuthService, ApiService],
   bootstrap: [AppComponent]
