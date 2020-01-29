@@ -7,15 +7,24 @@ import { EffectsModule } from '@ngrx/effects';
 import { errorReducer, ErrorState } from './reducers/error.reducers';
 import { AuthEffects } from './effects/auth.effect';
 import { authReducer, AuthState } from './reducers/auth.reducer';
+import {
+  RouterReducerState,
+  routerReducer,
+  StoreRouterConnectingModule,
+  RouterStateSerializer
+} from '@ngrx/router-store';
+import { RouterStateUrl, CustomSerializer } from './reducers/ router.reducer';
 
 export interface AppState {
   error: ErrorState;
   auth: AuthState;
+  router: RouterReducerState<RouterStateUrl>;
 }
 
 export const reducers: ActionReducerMap<AppState> = {
   error: errorReducer,
-  auth: authReducer
+  auth: authReducer,
+  router: routerReducer
 };
 
 export const effects = [AuthEffects];
@@ -26,7 +35,14 @@ export const effects = [AuthEffects];
     CommonModule,
     EffectsModule.forRoot(effects),
     StoreModule.forRoot(reducers),
-    StoreDevtoolsModule.instrument()
+    StoreDevtoolsModule.instrument(),
+    StoreRouterConnectingModule.forRoot()
+  ],
+  providers: [
+    {
+      provide: RouterStateSerializer,
+      useClass: CustomSerializer
+    }
   ]
 })
 export class AppStoreModule { }

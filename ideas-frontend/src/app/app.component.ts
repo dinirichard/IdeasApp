@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
 
   showError(err) {
     if (err && err.error) {
-      // console.log('The error', err.error.message);
       this.toastr.error(err.error.message || 'Internal server error', 'Error Message', {
         closeButton: true
       });
