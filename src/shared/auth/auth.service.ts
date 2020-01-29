@@ -1,7 +1,7 @@
 import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { UserDTO } from 'src/user/dto/user.dto';
+import { UserRO } from 'src/user/dto/user.res.dto';
 
 @Injectable()
 export class AuthService {
@@ -17,9 +17,11 @@ export class AuthService {
         const payload = { username: user.username, sub: user.id };
         // console.log(JSON.stringify(payload));
         return {
+            id: user.id,
+            created: user.created,
             username: user.username,
             access_token: this.jwtService.sign(payload),
-        };
+        } as UserRO;
     }
 
 }

@@ -3,11 +3,11 @@ import { Idea } from './idea';
 
 export interface User {
     id: string;
-    created: Date;
     username: string;
-    password: string;
-    ideas: Idea[];
-    bookmarks: Idea[];
+    created: Date;
+    access_token?: string;
+    ideas?: Idea[];
+    bookmarks?: Idea[];
 }
 
 export class UserDTO {

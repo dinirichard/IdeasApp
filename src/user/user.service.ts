@@ -63,6 +63,8 @@ export class UserService {
         const result = await newUser.save();
         const payload = { username: result.username, sub: result.id };
         return {
+            id: result.id,
+            created: result.created,
             username: result.username,
             access_token: this.jwtService.sign(payload),
         };

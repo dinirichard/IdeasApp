@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@env/environment';
 import { ApiService } from './api.service';
 import { AuthType, AuthDTO } from '@app/models/auth';
+import { mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { User } from '@app/models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +15,16 @@ export class AuthService {
   private api: string = environment.api_server + '/auth';
 
   constructor(
-    private http: HttpClient,
-    private apiService: ApiService,
+    private http: HttpClient
   ) { }
 
   private auth(authType: AuthType, data: AuthDTO) {
-    return this.http.post(`${this.api}/${authType}`, data);
+    return this.http.post(`${this.api}/${authType}`, data).pipe(
+      mergeMap((user: User) => {
+        this.token = user.access_token;
+        return of(user);
+      })
+    );
   }
 
   login(data: AuthDTO) {
@@ -26,6 +33,12 @@ export class AuthService {
 
   register(data: AuthDTO) {
     return this.auth('register', data);
+  }
+
+  whoami() {
+    return this.http.get(`${this.api}/whoami`, {
+      headers: { authorization: `Bearer ${this.token}` }
+    });
   }
 
   get token() {

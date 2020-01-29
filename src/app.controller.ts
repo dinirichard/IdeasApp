@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards, Post, Body } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Body, Query } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MyAuthGuard } from './shared/gaurds/auth.gaurd';
 import { UserService } from './user/user.service';
@@ -24,8 +24,7 @@ export class AppController {
   // @UseGuards(AuthGuard('jwt'))
   @UseGuards(new MyAuthGuard())
   @Get('api/users')
-  showAllUsers(@Query('page') page?: number, @User('sub') user) {
-    console.log(user);
+  showAllUsers(@Query('page') page?: number) {
     return this.userService.showAll(page);
   }
 
