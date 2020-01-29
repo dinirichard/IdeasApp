@@ -8,7 +8,8 @@ import {
     SetInitialUser,
     AuthActionTypes,
     SetCurrentUser,
-    LoginUser
+    LoginUser,
+    RegisterUser
 } from '../actions/auth.action';
 
 import { Observable, of } from 'rxjs';
@@ -48,9 +49,9 @@ export class AuthEffects {
 
     @Effect()
     registerUser$: Observable<Action> = this.action$.pipe(
-        ofType<LoginUser>(AuthActionTypes.REGISTER_USER),
+        ofType<RegisterUser>(AuthActionTypes.REGISTER_USER),
         tap(() => this.store.dispatch(new RemoveError())),
-        mergeMap((action: LoginUser) =>
+        mergeMap((action: RegisterUser) =>
             this.authService.register(action.payload).pipe(
                 map((user: User) => new SetCurrentUser(user)),
                 catchError(err => of(new AddError(err)))

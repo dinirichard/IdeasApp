@@ -1,0 +1,19 @@
+.AuthForm {
+    width: 60%;
+    margin:auto;
+
+    &-buttons {
+        display: flex;
+        justify-content: center;
+    }
+
+    &-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .ui-inputgroup{
+            margin: 1rem;
+        }
+    }
+}
