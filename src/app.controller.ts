@@ -5,6 +5,7 @@ import { UserService } from './user/user.service';
 import { AuthService } from './shared/auth/auth.service';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from './user/user.decorator';
+import { Args } from '@nestjs/graphql';
 
 @Controller()
 export class AppController {
@@ -14,26 +15,27 @@ export class AppController {
     private readonly authService: AuthService,
   ) { }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('auth/whoami')
+  @UseGuards(new MyAuthGuard())
+  showMe(@User('username') username) {
+    return this.userService.read(username);
   }
 
   // @UseGuards(AuthGuard('jwt'))
   @UseGuards(new MyAuthGuard())
   @Get('api/users')
-  showAllUsers(@User('sub') user) {
+  showAllUsers(@Query('page') page?: number, @User('sub') user) {
     console.log(user);
-    return this.userService.showAll();
+    return this.userService.showAll(page);
   }
 
   // @UseGuards(AuthGuard('jwt'))
-  @Post('login')
+  @Post('auth/login')
   login(@Body() data) {
     return this.authService.login(data);
   }
 
-  @Post('register')
+  @Post('auth/register')
   register(@Body() data) {
     return this.userService.register(data);
   }
