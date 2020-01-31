@@ -8,7 +8,7 @@ import { ValidationPipe } from '../shared/validation.pipe';
 import { MyAuthGuard } from 'src/shared/gaurds/auth.gaurd';
 import { User } from 'src/user/user.decorator';
 
-@Controller('api/idea')
+@Controller('api/ideas')
 export class IdeaController {
 
     private logger = new Logger('IdeaController');

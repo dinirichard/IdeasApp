@@ -1,0 +1,53 @@
+<section class="section">
+    <div class="columns is-centered">
+        <div class="column ">
+            <mat-list *ngFor="let idea of ideas | async">
+                <mat-list-item style="height: auto;">
+
+                    <mat-card>
+
+                        <article class="media">
+                            <figure class="media-left">
+                                <div class="icon-bar">
+                                    <span class="icon is-child">
+                                        <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="icon">
+                                        {{ idea.upvotes - idea.downvotes || 0}}
+                                    </span>
+                                    <span class="icon">
+                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </span>
+                                </div>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong>{{idea.idea}}</strong>
+                                        <br>
+                                        {{ idea.description }}
+                                    </p>
+                                </div>
+                                <nav class="level is-mobile">
+                                    <div class="level-left">
+                                        Created by &nbsp;
+                                        <span class="has-text-warning">
+                                            {{ idea.author.username}} &nbsp;
+                                        </span>
+                                        on &nbsp; {{idea.created | date}} &nbsp;&nbsp;
+                                    </div>
+                                    <div class="level-right has-text-warning">
+                                        comments: ({{idea.comments ? idea.comments.length : 0}})&nbsp;&nbsp;
+                                    </div>
+                                </nav>
+                            </div>
+                            <!-- <div class="media-right">
+                        <button class="delete"></button>
+                    </div> -->
+                        </article>
+                    </mat-card>
+                </mat-list-item>
+            </mat-list>
+        </div>
+    </div>
+</section>

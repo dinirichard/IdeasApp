@@ -3,8 +3,8 @@ import { Comment } from './comment';
 
 export interface Idea {
     id: string;
-    created: Date;
-    updated: Date;
+    created?: Date;
+    updated?: Date;
     idea: string;
     description: string;
     author?: User;
@@ -14,6 +14,7 @@ export interface Idea {
 }
 
 export interface IdeaDTO {
+    id?: string;
     idea: string;
     description: string;
 }

@@ -5,7 +5,7 @@ import { AddError } from './store/actions/errors.action';
 import { AuthDTO } from './models/auth';
 import { LoginUser, SetInitialUser } from './store/actions/auth.action';
 import { ToastrService } from 'ngx-toastr';
-import { isNull } from 'util';
+import { AuthService } from '@app/services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -18,16 +18,13 @@ export class AppComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private toastr: ToastrService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
-    this.store.dispatch(
-      // new LoginUser({
-      //   username: 'admin',
-      //   password: 'admin'
-      // } as AuthDTO)
-      new SetInitialUser()
-    );
+    if (this.authService.token) {
+      this.store.dispatch(new SetInitialUser());
+    }
     this.store
       .select(state => state.error)
       .subscribe(val => this.showError(val));

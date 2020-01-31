@@ -205,6 +205,7 @@ export class IdeaService {
             id: idea.id,
             idea: idea.idea,
             description: idea.description,
+            created: idea.created,
             updated: idea.updated,
             upvotes: idea.upvotes.length,
             downvotes: idea.downvotes.length,

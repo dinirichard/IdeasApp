@@ -32,7 +32,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
     MaterialModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 1000,
+      timeOut: 5000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     })
