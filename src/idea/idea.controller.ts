@@ -22,11 +22,13 @@ export class IdeaController {
     }
 
     @Get()
+    @UseGuards(new MyAuthGuard())
     showAllIdeas(@Query('page') page: number) {
         return this.ideaService.showAll(page);
     }
 
     @Get('/newest')
+    @UseGuards(new MyAuthGuard())
     showNewestIdeas(@Query('page') page: number) {
         return this.ideaService.showAll(page, true);
     }
@@ -40,6 +42,7 @@ export class IdeaController {
     }
 
     @Get(':id')
+    @UseGuards(new MyAuthGuard())
     async readIdea(@Param('id') id: string) {
         return await this.ideaService.read(id);
     }

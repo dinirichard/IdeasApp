@@ -1,8 +1,9 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector, Store } from '@ngrx/store';
 
 import { Entity } from '@app/models/entity';
 import { Idea } from '@app/models/idea';
-import { IdeaState } from '.';
+import { IdeaState, AppState } from '.';
+
 
 export const ideaEntityToArray = (ideaState: IdeaState) => {
     const { ideas }: { ideas: Entity<Idea> } = ideaState;
@@ -28,3 +29,4 @@ export const selectCurrentIdea = createSelector(
         return ideas[selectedIdea];
     }
 );
+

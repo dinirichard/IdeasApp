@@ -13,7 +13,6 @@ export class NavbarComponent implements OnInit {
   token = false;
 
   ngOnInit() {
-    console.log(this.authService.token);
     if (this.authService.token) {
       this.token = true;
     }

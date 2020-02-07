@@ -2,6 +2,7 @@
 import { Idea } from '@app/models/idea';
 import { Entity } from '@app/models/entity';
 import * as Store from '@app/store/app-store.module';
+import { Comment } from '@app/models/comment';
 
 export interface IdeaState {
     ideas: Entity<Idea>;
@@ -9,6 +10,7 @@ export interface IdeaState {
     loading: boolean;
     loaded: boolean;
     selectedIdea?: string;
+    selectedIdeaComments?: Comment[];
 }
 
 export interface AppState extends Store.AppState {

@@ -7,6 +7,7 @@ import { IdeaSchema } from 'src/idea/interfaces/idea.model';
 import { CommentSchema } from './models/comment.model';
 import { UserModule } from 'src/user/user.module';
 import { CommentResolver } from './comment.resolver';
+import { IdeaService } from 'src/idea/idea.service';
 
 @Module({
     imports: [MongooseModule.forFeature([
@@ -17,6 +18,6 @@ import { CommentResolver } from './comment.resolver';
         UserModule,
     ],
     controllers: [CommentController],
-    providers: [CommentService, CommentResolver],
+    providers: [CommentService, CommentResolver, IdeaService],
 })
 export class CommentModule { }

@@ -51,6 +51,9 @@ export class AuthService {
     } else {
       localStorage.clear();
     }
+  }
 
+  deleteToken() {
+    localStorage.clear();
   }
 }

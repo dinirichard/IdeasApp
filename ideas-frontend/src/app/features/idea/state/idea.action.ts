@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Idea, IdeaDTO } from '@app/models/idea';
+import { CommentDTO, Comment } from '@app/models/comment';
 
 export enum IdeaActions {
     LOAD_IDEAS = '[Idea] Load ideas',
@@ -18,7 +19,12 @@ export enum IdeaActions {
     DELETE_IDEA_SUCCESS = '[Idea] Delete idea success',
 
     UPVOTE_IDEA = '[Idea] Upvote idea',
-    DOWNVOTE_IDEA = '[Idea] Downvote idea'
+    DOWNVOTE_IDEA = '[Idea] Downvote idea',
+
+    CREATE_COMMENT = '[Idea] Create comment',
+    CREATE_COMMENT_SUCCESS = '[Idea] Create comment success',
+    LOAD_IDEA_COMMENTS = '[Idea] Load idea comments',
+    LOAD_IDEA_COMMENTS_SUCCESS = '[Idea] Load idea comments success'
 }
 
 export class LoadIdeas implements Action {
@@ -80,6 +86,26 @@ export class DownvoteIdea implements Action {
     constructor(public payload: string) { }
 }
 
+export class CreateComment implements Action {
+    readonly type = IdeaActions.CREATE_COMMENT;
+    constructor(public payloadid: string, public payload: CommentDTO) { }
+}
+
+export class CreateCommentSuccess implements Action {
+    readonly type = IdeaActions.CREATE_COMMENT_SUCCESS;
+    constructor(public payload: Comment) { }
+}
+
+export class LoadIdeaComments implements Action {
+    readonly type = IdeaActions.LOAD_IDEA_COMMENTS;
+    constructor(public payloadid: string, public page?: string) { }
+}
+
+export class LoadIdeaCommentsSuccess implements Action {
+    readonly type = IdeaActions.LOAD_IDEA_COMMENTS_SUCCESS;
+    constructor(public payload: Comment[]) { }
+}
+
 export type MyAction =
     | LoadIdeas
     | LoadIdeasSuccess
@@ -92,4 +118,8 @@ export type MyAction =
     | DeleteIdea
     | DeleteIdeaSuccess
     | UpvoteIdea
-    | DownvoteIdea;
+    | DownvoteIdea
+    | CreateComment
+    | CreateCommentSuccess
+    | LoadIdeaComments
+    | LoadIdeaCommentsSuccess;

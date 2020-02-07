@@ -38,5 +38,4 @@ export class CommentController {
         return this.commentService.destroy(idea, user);
     }
 
-
 }

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { environment } from '@env/environment';
 import { User } from '@app/models/user';
-import { Comment } from '@app/models/comment';
+import { Comment, CommentDTO } from '@app/models/comment';
 import { Idea, IdeaDTO } from '@app/models/idea';
 import { AuthService } from './auth.service';
 
@@ -47,7 +47,7 @@ export class ApiService {
   }
 
   getIdea(username: string): Observable<Idea> {
-    return this.request('GET', `users/${username}`);
+    return this.request('GET', `ideas/${username}`);
   }
 
   createIdea(data: IdeaDTO): Observable<Idea> {
@@ -92,15 +92,15 @@ export class ApiService {
     return this.request('GET', endpoint);
   }
 
-  getComment(id: string): Observable<Comment> {
+  getComment(id: string): Observable<Idea> {
     return this.request('GET', `comments/${id}`);
   }
 
-  createComment(idea: string, data): Observable<Comment> {
-    return this.request('POST', `comments/idea/${idea}`, data);
+  createComment(ideaId: string, data: CommentDTO): Observable<Comment> {
+    return this.request('POST', `comments/idea/${ideaId}`, data);
   }
 
-  deleteComment(id: string): Observable<Comment> {
+  deleteComment(id: string): Observable<Idea> {
     return this.request('DELETE', `comments/${id}`);
   }
 

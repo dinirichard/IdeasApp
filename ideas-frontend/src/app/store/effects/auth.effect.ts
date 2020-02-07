@@ -17,6 +17,7 @@ import { mergeMap, catchError, map, tap } from 'rxjs/operators';
 import { User } from '@app/models/user';
 import { AddError, RemoveError } from '../actions/errors.action';
 import { AppState } from '../app-store.module';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {
@@ -24,12 +25,16 @@ export class AuthEffects {
         private action$: Actions,
         private authService: AuthService,
         private store: Store<AppState>,
+        private router: Router
     ) { }
 
     @Effect()
     setInitialUSer$: Observable<Action> = this.action$.pipe(
         ofType<SetInitialUser>(AuthActionTypes.SET_INITIAL_USER),
-        tap(() => this.store.dispatch(new RemoveError())),
+        tap(() => {
+            this.store.dispatch(new RemoveError());
+            this.router.navigate(['ideas']);
+        }),
         mergeMap((action: SetInitialUser) => this.authService.whoami().pipe(
             map((user: User) => new SetCurrentUser(user)),
             catchError(err => {
@@ -42,7 +47,10 @@ export class AuthEffects {
     @Effect()
     loginUser$: Observable<Action> = this.action$.pipe(
         ofType<LoginUser>(AuthActionTypes.LOGIN_USER),
-        tap(() => this.store.dispatch(new RemoveError())),
+        tap(() => {
+            this.store.dispatch(new RemoveError());
+            this.router.navigate(['ideas']);
+        }),
         mergeMap((action: LoginUser) =>
             this.authService.login(action.payload).pipe(
                 map((user: User) => new SetCurrentUser(user)),

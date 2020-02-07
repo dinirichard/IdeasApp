@@ -8,6 +8,7 @@ import { IdeaRO } from './dto/idea.response.dto';
 import { UserService } from 'src/user/user.service';
 import { Votes } from 'src/shared/votes.enum';
 import { CommentRO } from 'src/comment/dto/comment.res.dto';
+import { UserRO } from 'src/user/dto/user.res.dto';
 
 @Injectable()
 export class IdeaService {
@@ -58,8 +59,15 @@ export class IdeaService {
             .populate('author', '-password')
             .populate('upvotes', '-password')
             .populate('downvotes', '-password')
-            .populate('comments')
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'author',
+                    select: '-password',
+                },
+            })
             .execPopulate();
+        console.log(full.toJSON());
         return this.toResponseObject(full);
     }
 
@@ -197,7 +205,7 @@ export class IdeaService {
 
 
 
-    private toResponseObject(idea: Idea): IdeaRO {
+    public toResponseObject(idea: Idea): IdeaRO {
         let author;
         const checkForComments = idea.comments.toString().split(':');
 
@@ -225,9 +233,18 @@ export class IdeaService {
 
         if (idea.comments.length >= 1) {
             if (checkForComments.length > 2) {
-                const comments = idea.comments.map((comment): CommentRO =>
-                    comment.responseFormat(),
-                );
+                const comments = idea.comments.map((comment): CommentRO => {
+                    comment.populate('author', '-password').execPopulate();
+
+                    const result = comment.responseFormat();
+                    result.author = {
+                        id: comment.author.id,
+                        username: comment.author.username,
+                        created: comment.author.created,
+                    } as UserRO;
+
+                    return result;
+                });
 
                 ideaRo.comments = comments;
             }

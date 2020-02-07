@@ -1,11 +1,34 @@
+.buttons-bar {
+  -webkit-box-shadow: 0 0 10px rgb(0,0,0);
+  -moz-box-shadow: 0 0 10px rgb(0,0,0);
+  // box-shadow:  -1px 1px #354b70,
+  //        -2px 2px #354b70,
+  //        -3px 3px #354b70,
+  //        -4px 4px #354b70,
+  //        -5px 5px #354b70;
+}
+section.section {
+  padding-top: 24px;
+}
+
+div.column.content-column {
+  padding: 0px;
+}
+div.column.space-column {
+  padding: 0em;
+}
+
 .icon-bar span {
     display: block;
     text-align: center;
     transition: all 0.3s ease;
   }
 
-mat-card{
-      width: 600px;
+mat-card.mat-card-ideas.mat-card{
+      // position: relative;
+      width: 100%;
+      min-width: 300px;
+      margin: 0px;
       background-color: burlywood;
       
       
@@ -16,4 +39,29 @@ mat-card{
 }
 is-grouped-centered {
   align-items: center;
+}
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+.stack-contianer {
+  position: relative;
+}
+
+////////////////////////////////////////////////////
+
+.columns.space-column {
+  border-right: thick;
+  border-color: gray;
+}
+
+.columns.content-column {
+}
+
+.columns.ad-column {
+  border-left: thick;
+  border-color: gray;
 }

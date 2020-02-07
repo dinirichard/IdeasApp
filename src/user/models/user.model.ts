@@ -38,15 +38,7 @@ UserSchema.method('comparePassword', function (password: string): boolean {
     return false;
 });
 
-UserSchema.method('responseFormat', function (): UserRO {
-    const user: User = this;
-    const res: UserRO = {
-        id: user.id,
-        username: user.username,
-        created: user.created,
-    };
-    return res;
-});
+
 
 // const User = mongoose.model<User>("Users", UserSchema);
 
@@ -62,3 +54,13 @@ export interface User extends mongoose.Document {
 
     responseFormat(): UserRO;
 }
+
+UserSchema.method('responseFormat', function (): UserRO {
+    const user: User = this;
+    const res: UserRO = {
+        id: user.id,
+        username: user.username,
+        created: user.created,
+    };
+    return res;
+});

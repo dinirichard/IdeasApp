@@ -8,6 +8,9 @@ import { CommentDTO } from './dto/comment.dto';
 import { Comment } from './models/comment.model';
 import { CommentRO } from './dto/comment.res.dto';
 import { IdeaRO } from 'src/idea/dto/idea.response.dto';
+import { IdeaService } from 'src/idea/idea.service';
+import { map } from 'rxjs/operators';
+import { UserRO } from 'src/user/dto/user.res.dto';
 
 @Injectable()
 export class CommentService {
@@ -16,27 +19,17 @@ export class CommentService {
         @InjectModel('Idea') private readonly ideaModel: Model<Idea>,
         @InjectModel('User') private readonly userModel: Model<User>,
         private userService: UserService,
+        private ideaService: IdeaService,
     ) { }
 
-    async showByIdea(id: string, page: number = 1) {
-        const idea = await this.ideaModel.findById(id)
-            .limit(25).skip(25 * (page - 1))
-            .populate({
-                path: 'comments',
-                populate: {
-                    path: 'idea',
-                    select: '-comments',
-                },
-            })
-            .populate({
-                path: 'comments',
-                populate: {
-                    path: 'author',
-                    select: '-password',
-                },
-            });
+    async showByIdea(idea: string, page: number = 1) {
+        const comments = await this.commentModel.find()
+            .where({ idea })
+            .limit(15 * page)
+            // .sort({ created: 'desc' })
+            .populate('author', '-password');
 
-        return idea.comments.map(comment =>
+        return comments.map(comment =>
             this.toResponseObject(comment));
     }
 
@@ -67,8 +60,10 @@ export class CommentService {
 
         idea.comments.push(comment);
 
-        await comment.save();
         await idea.save();
+
+        comment.populate('author', '-password');
+
         return this.toResponseObject(comment);
     }
 

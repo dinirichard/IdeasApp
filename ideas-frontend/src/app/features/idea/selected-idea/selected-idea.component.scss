@@ -1,0 +1,53 @@
+.icon-bar span {
+    display: block;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+
+mat-card{
+      width: 600px;
+      background-color: burlywood;
+      margin-right: 0px;
+      
+}
+
+.center-list {
+  align-items: center;
+}
+is-grouped-centered {
+  align-items: center;
+}
+
+mat-divider {
+  margin-top: 15px;
+  margin-bottom: 15px; 
+  width: 600px;
+}
+
+article {
+  width: 600px;
+}
+
+
+/* Rules for sizing the icon. */
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+.stack-contianer {
+  position: relative;
+}
+
+$breakpoints: (phone: 640px, 
+               tablet: 768px, 
+               desktop: 1024px,
+               widescreen: 1216px,
+               fullhd: 1408px) !default;
+
+
+// @media (max-width: 768px) {
+//     mat-card{
+//       max-width: 220px;
+//     }
+// }

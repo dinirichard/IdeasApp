@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState, LoadIdeas } from '../state';
+import { AppState, LoadIdeas, UpvoteIdea, DownvoteIdea } from '../state';
 import { Idea } from '@app/models/idea';
 import { Observable } from 'rxjs';
 import { Entity } from '@app/models/entity';
@@ -20,6 +20,14 @@ export class IdeasComponent implements OnInit {
   ngOnInit() {
     this.store.dispatch(new LoadIdeas());
     this.ideas = this.store.select(selectAllIdeas);
+  }
+
+  upvote(ideaId: string) {
+    this.store.dispatch(new UpvoteIdea(ideaId));
+  }
+
+  downvote(ideaId: string) {
+    this.store.dispatch(new DownvoteIdea(ideaId));
   }
 
 }

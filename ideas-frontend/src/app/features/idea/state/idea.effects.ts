@@ -43,7 +43,10 @@ export class IdeaEffects {
             } else {
                 return this.api.getIdea(action.payload).pipe(
                     mergeMap(res => of(new fromIdea.LoadIdeaSuccess(res))),
-                    catchError(err => of(new fromError.AddError(err.error)))
+                    catchError(err => {
+                        this.router.navigate(['ideas']);
+                        return of(new fromError.AddError(err.error));
+                    })
                 );
             }
         })
@@ -56,6 +59,30 @@ export class IdeaEffects {
         mergeMap(action =>
             this.api.createIdea(action.payload).pipe(
                 map(idea => new fromIdea.CreateIdeaSuccess(idea)),
+                catchError(err => of(new fromError.AddError(err.error)))
+            )
+        )
+    );
+
+    @Effect()
+    createComments$: Observable<Action> = this.action$.pipe(
+        ofType<fromIdea.CreateComment>(fromIdea.IdeaActions.CREATE_COMMENT),
+        tap(() => this.store.dispatch(new fromError.RemoveError())),
+        mergeMap(action =>
+            this.api.createComment(action.payloadid, action.payload).pipe(
+                map(idea => new fromIdea.CreateCommentSuccess(idea)),
+                catchError(err => of(new fromError.AddError(err.error)))
+            )
+        )
+    );
+
+    @Effect()
+    loadIdeaComments$: Observable<Action> = this.action$.pipe(
+        ofType<fromIdea.LoadIdeaComments>(fromIdea.IdeaActions.LOAD_IDEA_COMMENTS),
+        tap(() => this.store.dispatch(new fromError.RemoveError())),
+        mergeMap((action: fromIdea.LoadIdeaComments) =>
+            this.api.getCommentsByIdea(action.payloadid).pipe(
+                map(comments => new fromIdea.LoadIdeaCommentsSuccess(comments)),
                 catchError(err => of(new fromError.AddError(err.error)))
             )
         )

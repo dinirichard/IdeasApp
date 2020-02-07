@@ -1,43 +1,66 @@
 <section class="section">
-    <div class="columns is-centered">
-        <div class="column ">
+
+    <div class="columns is-vcentered">
+        <div
+            class="column space-column is-0-mobile is-1-tablet is-one-fifth-desktop is-one-fifth-widescreen is-one-fifth-fullhd">
+        </div>
+        <div class="column content-column ">
             <mat-list *ngFor="let idea of ideas | async">
                 <mat-list-item style="height: auto;">
 
-                    <mat-card>
+                    <mat-card class="mat-card-ideas">
 
                         <article class="media">
                             <figure class="media-left">
-                                <div class="icon-bar">
-                                    <span class="icon is-child">
-                                        <i class="fa fa-angle-up" aria-hidden="true"></i>
+                                <div class="icon-bar" style="align-items: center;">
+                                    <span class="icon is-medium">
+                                        <a (onclick)="upvote(idea.id)">
+                                            <i class="material-icons md-36">
+                                                keyboard_arrow_up
+                                            </i>
+                                        </a>
                                     </span>
-                                    <span class="icon">
+                                    <p style="text-align: center;">
                                         {{ idea.upvotes - idea.downvotes || 0}}
-                                    </span>
-                                    <span class="icon">
-                                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                                    </p>
+                                    <span class="icon is-medium">
+                                        <a (onclick)="downvote(idea.id)">
+                                            <i class="material-icons md-36">
+                                                keyboard_arrow_down
+                                            </i>
+                                        </a>
                                     </span>
                                 </div>
                             </figure>
                             <div class="media-content">
                                 <div class="content">
                                     <p>
-                                        <strong>{{idea.idea}}</strong>
+                                        <a>
+                                            <strong [routerLink]="['/ideas', idea.id]">{{idea.idea}}</strong>
+                                        </a>
                                         <br>
                                         {{ idea.description }}
                                     </p>
                                 </div>
                                 <nav class="level is-mobile">
                                     <div class="level-left">
-                                        Created by &nbsp;
+                                        By &nbsp;
                                         <span class="has-text-warning">
                                             {{ idea.author.username}} &nbsp;
                                         </span>
-                                        on &nbsp; {{idea.created | date}} &nbsp;&nbsp;
+                                        {{idea.created | dateAgo}} &nbsp;&nbsp;
                                     </div>
-                                    <div class="level-right has-text-warning">
-                                        comments: ({{idea.comments ? idea.comments.length : 0}})&nbsp;&nbsp;
+                                    <div class="level-right has-text-warning" style="padding-right: 10px; ">
+                                        <a [routerLink]="['/ideas', idea.id]">
+                                            <span class="icon is-medium">
+                                                <span class="fa-stack is-primary" style=" text-align: center;">
+                                                    <i class="far fa-comment-alt fa-stack-2x"></i>
+                                                    <i class="far"
+                                                        style="color: black;">{{idea.comments ? idea.comments.length : 0}}</i>
+                                                </span>
+                                            </span>
+
+                                        </a>
                                     </div>
                                 </nav>
                             </div>
@@ -49,5 +72,9 @@
                 </mat-list-item>
             </mat-list>
         </div>
+        <div
+            class="column is-narrow-mobile ad-column is-one-fifth-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd">
+        </div>
     </div>
+
 </section>

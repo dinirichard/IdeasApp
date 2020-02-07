@@ -13,6 +13,7 @@ import { CommentSchema } from 'src/comment/models/comment.model';
 import { CommentModule } from 'src/comment/comment.module';
 import { CommentService } from 'src/comment/comment.service';
 import { AuthService } from 'src/shared/auth/auth.service';
+import { IdeaService } from 'src/idea/idea.service';
 
 @Module({
     imports: [
@@ -29,7 +30,7 @@ import { AuthService } from 'src/shared/auth/auth.service';
     ],
     controllers: [UserController],
     providers: [UserService, JwtStrategy,
-        UserResolver, CommentService, AuthService],
+        UserResolver, CommentService, AuthService, IdeaService],
     exports: [UserService],
 })
 export class UserModule { }

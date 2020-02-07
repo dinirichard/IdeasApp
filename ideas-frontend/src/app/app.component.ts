@@ -6,6 +6,7 @@ import { AuthDTO } from './models/auth';
 import { LoginUser, SetInitialUser } from './store/actions/auth.action';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '@app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,8 @@ export class AppComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private toastr: ToastrService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -35,6 +37,11 @@ export class AppComponent implements OnInit {
       this.toastr.error(err.error.message || 'Internal server error', 'Error Message', {
         closeButton: true
       });
+
+      if (err.error.message === 'Token error: jwt malformed') {
+        this.authService.deleteToken();
+        this.router.navigate(['/auth']);
+      }
     }
   }
 }

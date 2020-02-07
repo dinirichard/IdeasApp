@@ -14,12 +14,15 @@ import { UiModule } from './ui.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { UuidGuard } from './services/uuid.guard';
+import { DateAgoPipe } from './services/date-ago.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthComponent,
-    NavbarComponent
+    NavbarComponent,
+
   ],
   imports: [
     AppRoutingModule,
@@ -37,7 +40,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
       preventDuplicates: true,
     })
   ],
-  providers: [AuthService, ApiService],
+  providers: [AuthService, ApiService, UuidGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
