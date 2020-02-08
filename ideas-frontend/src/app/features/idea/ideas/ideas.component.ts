@@ -23,10 +23,12 @@ export class IdeasComponent implements OnInit {
   }
 
   upvote(ideaId: string) {
+    console.log(ideaId);
     this.store.dispatch(new UpvoteIdea(ideaId));
   }
 
   downvote(ideaId: string) {
+    console.log(ideaId);
     this.store.dispatch(new DownvoteIdea(ideaId));
   }
 

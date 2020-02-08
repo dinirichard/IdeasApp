@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store, select } from '@ngrx/store';
-import { AppState, CreateComment, LoadIdeaComments } from '../state';
+import { AppState, CreateComment, LoadIdeaComments, UpvoteIdea, DownvoteIdea } from '../state';
 import { selectCurrentIdea } from '../state/idea.selector';
 import { Subscription, Observable, from } from 'rxjs';
 import { Idea } from '@app/models/idea';
@@ -50,6 +50,14 @@ export class SelectedIdeaComponent implements OnInit, OnDestroy {
   submitComment() {
     const val = this.commentForm.getRawValue() as CommentDTO;
     this.store.dispatch(new CreateComment(this.idea.id, val));
+  }
+
+  upvote(ideaId: string) {
+    this.store.dispatch(new UpvoteIdea(ideaId));
+  }
+
+  downvote(ideaId: string) {
+    this.store.dispatch(new DownvoteIdea(ideaId));
   }
 
 

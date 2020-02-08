@@ -1,14 +1,19 @@
+section.section {
+  padding-top: 24px;
+}
+
 .icon-bar span {
     display: block;
     text-align: center;
     transition: all 0.3s ease;
   }
 
-mat-card{
-      width: 600px;
-      background-color: burlywood;
-      margin-right: 0px;
-      
+  mat-card.mat-card-ideas.mat-card{
+    // position: relative;
+    width: 100%;
+    min-width: 300px;
+    margin: 0px;
+    background-color: burlywood;   
 }
 
 .center-list {
@@ -21,11 +26,11 @@ is-grouped-centered {
 mat-divider {
   margin-top: 15px;
   margin-bottom: 15px; 
-  width: 600px;
+  width: 100%;
 }
 
 article {
-  width: 600px;
+  width: 100%;
 }
 
 
@@ -51,3 +56,19 @@ $breakpoints: (phone: 640px,
 //       max-width: 220px;
 //     }
 // }
+
+
+.columns.space-column {
+  border-right: thick;
+  border-color: gray;
+}
+
+.columns.content-column {
+  
+}
+
+.columns.ad-column {
+  border-left: thick;
+  border-color: gray;
+}
+

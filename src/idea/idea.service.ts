@@ -103,6 +103,7 @@ export class IdeaService {
         let idea = await this.ideaModel.findOne({ _id: id })
             .populate('upvotes', '-password')
             .populate('downvotes', '-password')
+            .populate('author', '-password')
             .populate('comments');
         const user = await this.userModel.findById(userId);
 
@@ -114,6 +115,7 @@ export class IdeaService {
         let idea = await this.ideaModel.findById(id)
             .populate('upvotes', '-password')
             .populate('downvotes', '-password')
+            .populate('author', '-password')
             .populate('comments');
         const user = await this.userModel.findById(userId);
 
@@ -121,8 +123,6 @@ export class IdeaService {
 
         return this.toResponseObject(idea);
     }
-
-
 
     async bookmark(id: string, userId: string) {
         const idea = await this.ideaModel.findById(id);
