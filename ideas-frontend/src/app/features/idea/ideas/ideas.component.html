@@ -1,31 +1,35 @@
 <section class="section">
-
     <div class="columns is-vcentered">
         <div
-            class="column space-column is-0-mobile is-1-tablet is-one-fifth-desktop is-one-fifth-widescreen is-one-fifth-fullhd">
-        </div>
+            class="column space-column is-0-mobile is-1-tablet is-one-fifth-desktop is-one-fifth-widescreen is-one-fifth-fullhd"
+        ></div>
         <div class="column content-column ">
             <mat-list *ngFor="let idea of ideas | async">
                 <mat-list-item style="height: auto;">
-
                     <mat-card class="mat-card-ideas">
-
                         <article class="media">
                             <figure class="media-left">
-                                <div class="icon-bar" style="align-items: center;">
+                                <div
+                                    class="icon-bar"
+                                    style="align-items: center;"
+                                >
                                     <span class="icon is-medium">
                                         <a (click)="upvote(idea.id)">
-                                            <i class="material-icons md-36">
+                                            <i
+                                                class="material-icons md-36 arrows"
+                                            >
                                                 keyboard_arrow_up
                                             </i>
                                         </a>
                                     </span>
                                     <p style="text-align: center;">
-                                        {{ idea.upvotes - idea.downvotes || 0}}
+                                        {{ idea.upvotes - idea.downvotes || 0 }}
                                     </p>
                                     <span class="icon is-medium">
                                         <a (click)="downvote(idea.id)">
-                                            <i class="material-icons md-36">
+                                            <i
+                                                class="material-icons md-36 arrows"
+                                            >
                                                 keyboard_arrow_down
                                             </i>
                                         </a>
@@ -34,32 +38,53 @@
                             </figure>
                             <div class="media-content">
                                 <div class="content">
-                                    <p>
+                                    <p class="content__title">
                                         <a>
-                                            <strong [routerLink]="['/ideas', idea.id]">{{idea.idea}}</strong>
+                                            <strong
+                                                [routerLink]="[
+                                                    '/ideas',
+                                                    idea.id
+                                                ]"
+                                                >{{ idea.idea }}</strong
+                                            >
                                         </a>
-                                        <br>
+                                    </p>
+                                    <p class="content__desc">
                                         {{ idea.description }}
                                     </p>
                                 </div>
                                 <nav class="level is-mobile">
                                     <div class="level-left">
                                         By &nbsp;
-                                        <span class="has-text-warning">
-                                            {{ idea.author.username}} &nbsp;
+                                        <span class="clickable">
+                                            {{ idea.author.username }} &nbsp;
                                         </span>
-                                        {{idea.created | dateAgo}} &nbsp;&nbsp;
+                                        {{ idea.created | dateAgo }}
+                                        &nbsp;&nbsp;
                                     </div>
-                                    <div class="level-right has-text-warning" style="padding-right: 10px; ">
+                                    <div
+                                        class="level-right has-text-warning"
+                                        style="padding-right: 10px; "
+                                    >
                                         <a [routerLink]="['/ideas', idea.id]">
                                             <span class="icon is-medium">
-                                                <span class="fa-stack is-primary" style=" text-align: center;">
-                                                    <i class="far fa-comment-alt fa-stack-2x"></i>
-                                                    <i class="far"
-                                                        style="color: black;">{{idea.comments ? idea.comments.length : 0}}</i>
+                                                <span
+                                                    class="fa-stack is-primary"
+                                                    style=" text-align: center;"
+                                                >
+                                                    <i
+                                                        class="far fa-comment-alt fa-stack-2x"
+                                                    ></i>
+                                                    <i
+                                                        class="far comment-num"
+                                                        >{{
+                                                            idea.commentNo
+                                                                ? idea.commentNo
+                                                                : 0
+                                                        }}</i
+                                                    >
                                                 </span>
                                             </span>
-
                                         </a>
                                     </div>
                                 </nav>
@@ -71,10 +96,16 @@
                     </mat-card>
                 </mat-list-item>
             </mat-list>
+            <div
+                infiniteScroll
+                [infiniteScrollDistance]="1"
+                [infiniteScrollThrottle]="900"
+                (scrolled)="onScroll()"
+            ></div>
+            <div class="hourglass" *ngIf="loading$ | async"></div>
         </div>
         <div
-            class="column is-narrow-mobile ad-column is-one-fifth-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd">
-        </div>
+            class="column is-narrow-mobile ad-column is-one-fifth-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd"
+        ></div>
     </div>
-
 </section>

@@ -1,6 +1,21 @@
+$color_darkblue: #071e3d;
+$color_blue_violet: #1f4287;
+$color_bluish_cian: #278ea5;
+$color_greenish_cian: #21e6c1;
+
+$color-grey-light-1: #f7f7f7;
+$color-grey-light-2: #eee;
+
+$color-grey-dark: #777;
+$color-grey-dark-2: #999;
+$color-white: #fff;
+$color-black: #000;
+
+$font-size-default: 1.6rem;
+
 .AuthForm {
     width: 60%;
-    margin:auto;
+    margin: auto;
 
     &-buttons {
         display: flex;
@@ -12,8 +27,105 @@
         flex-direction: column;
         align-items: center;
 
-        .ui-inputgroup{
+        .ui-inputgroup {
             margin: 1rem;
         }
     }
+}
+
+.section-book {
+    padding: 5rem 17rem;
+    background-image: linear-gradient(
+        to right bottom,
+        $color_greenish_cian,
+        $color_darkblue
+    );
+    height: 100%;
+}
+
+.book {
+    background-image: linear-gradient(
+            105deg,
+            rgba($color_darkblue, 0.9) 0%,
+            rgba($color_darkblue, 0.9) 50%,
+            transparent 50%
+        ),
+        url(../../../assets/idea-water2.jpeg);
+    background-size: cover;
+    border-radius: 3px;
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.2);
+    height: 50%;
+}
+
+.book__form {
+    width: 55%;
+    /* padding: 6rem; */
+    padding-top: 3rem;
+    padding-bottom: 5rem;
+    padding-left: 3rem;
+    padding-right: 1rem;
+}
+
+.form {
+    &__group:not(:last-child) {
+        border-bottom: 2rem;
+    }
+
+    &__input {
+        font-size: 1rem;
+        font-family: inherit;
+        padding: 1rem 1.3rem;
+        border-radius: 2px;
+        background-color: rgba(#fff, 0.8);
+        border-bottom: 3px solid transparent;
+        border: none;
+        width: 90%;
+        display: block;
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+            border-bottom: 3px solid $color_greenish_cian;
+        }
+
+        &:focus:invalid {
+            border-bottom: 3px solid red;
+        }
+
+        &::-webkit-input-placeholder {
+            color: $color-black;
+        }
+    }
+
+    &__label {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-left: 2rem;
+        margin-top: 0.7rem;
+        display: block;
+        transition: all 0.3s;
+        color: white;
+    }
+
+    // + is Adjacent sibling selector(next selector)
+    &__input:placeholder-shown + &__label {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4rem);
+    }
+}
+
+$tabs-link-active-color: white;
+.tabs {
+    $tabs-link-active-color: white;
+    ul {
+        $tabs-link-active-color: white;
+        border-bottom: 0px;
+        width: fit-content;
+    }
+}
+
+.tabs li.is-active a {
+    border-bottom-color: #ffa600d3;
+    color: #ffa600d3;
 }

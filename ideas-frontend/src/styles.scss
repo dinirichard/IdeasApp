@@ -7,6 +7,24 @@
 //     background-position-y: 0;
 //     background-size: 100% 100%;
 // }
+$color_darkblue: #071e3d;
+$color_blue_violet: #1f4287;
+$color_bluish_cian: #278ea5;
+$color_greenish_cian: #21e6c1;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+$color-grey-light-1: #f7f7f7;
+$color-grey-light-2: #eee;
+
+$color-grey-dark: #777;
+$color-grey-dark-2: #999;
+$color-white: #fff;
+$color-black: #000;
+
+html,
+body {
+    height: 100%;
+}
+body {
+    margin: 0;
+    font-family: Roboto, 'Helvetica Neue', sans-serif;
+}

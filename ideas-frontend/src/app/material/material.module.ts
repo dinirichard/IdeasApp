@@ -48,6 +48,7 @@ import {
   MatTreeModule,
 
 } from '@angular/material';
+import { DateAgoPipe } from '@app/services/date-ago.pipe';
 
 const MaterialComponents = [
   CommonModule,
@@ -95,17 +96,19 @@ const MaterialComponents = [
   ScrollingModule,
   MatFormFieldModule,
   FormsModule,
-  ReactiveFormsModule
+  ReactiveFormsModule,
+
 ];
 
 
 @NgModule({
-  declarations: [],
+  declarations: [DateAgoPipe],
   imports: [
     MaterialComponents
   ],
   exports: [
-    MaterialComponents
+    MaterialComponents,
+    DateAgoPipe
   ]
 })
 export class MaterialModule { }

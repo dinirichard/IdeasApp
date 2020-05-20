@@ -1,4 +1,4 @@
-<div class="AuthForm">
+<!-- <div class="AuthForm">
     <p-card>
         <form [formGroup]="authForm" (ngSubmit)="login()">
             <div class="AuthForm-form">
@@ -6,26 +6,125 @@
                     <span class="ui-inputgroup-addon">
                         <i class="fa fa-user"></i>
                     </span>
-                    <input pInputText type="text" placeholder="username" formControlName="username">
+                    <input
+                        pInputText
+                        type="text"
+                        placeholder="username"
+                        formControlName="username"
+                    />
                 </div>
 
                 <div class="ui-inputgroup">
                     <span class="ui-inputgroup-addon">
                         <i class="fa fa-user"></i>
                     </span>
-                    <input pInputText type="password" placeholder="password" formControlName="password">
+                    <input
+                        pInputText
+                        type="password"
+                        placeholder="password"
+                        formControlName="password"
+                    />
                 </div>
             </div>
 
             <div class="AuthForm-buttons buttons">
-                <button pButton type="button" class="button is-info" label="Register" [disabled]="authForm.invalid"
-                    (click)="register()">
-                </button>
+                <button
+                    pButton
+                    type="button"
+                    class="button is-info"
+                    label="Register"
+                    [disabled]="authForm.invalid"
+                    (click)="register()"
+                ></button>
 
-                <button pButton type="submit" class="button is-warning" label="Login"
-                    [disabled]="authForm.invalid"></button>
-
+                <button
+                    pButton
+                    type="submit"
+                    class="button is-warning"
+                    label="Login"
+                    [disabled]="authForm.invalid"
+                ></button>
             </div>
         </form>
     </p-card>
-</div>
+</div> -->
+
+<section class="section-book">
+    <div class="book">
+        <div class="book__form">
+            <div class="tabs is-medium is-right">
+                <ul>
+                    <li [class.is-active]="toggleLogin" >
+                        <a (click)="toggle()">
+                            <!-- <span class="icon is-small"
+                                ><i class="fas fa-image" aria-hidden="true"></i
+                            ></span> -->
+                            <span>Login</span>
+                        </a>
+                    </li>
+                    <li
+                        [class.is-active]="!toggleLogin"
+                        
+                    >
+                        <a (click)="toggle()">
+                            <!-- <span class="icon is-small"
+                                ><i class="fas fa-music" aria-hidden="true"></i
+                            ></span> -->
+                            <span>Register</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <form action="#" class="form" [formGroup]="authForm">
+                <div class="u-margin-bottom-medium">
+                    <h2 class="heading-secondary--mini">
+                        Start booking now
+                    </h2>
+                </div>
+
+                <div class="form__group">
+                    <input
+                        type="text"
+                        class="form__input"
+                        placeholder="Username"
+                        id="name"
+                        required
+                        formControlName="username"
+                    />
+                    <label for="name" class="form__label">Username</label>
+                </div>
+
+                <div class="form__group">
+                    <input
+                        type="password"
+                        class="form__input"
+                        placeholder="Password"
+                        id="email"
+                        required
+                        formControlName="password"
+                    />
+                    <label for="email" class="form__label">Password </label>
+                </div>
+
+                <div class="buttons">
+                    <button
+                        class="button is-primary is-light"
+                        (click)="login()"
+                        [disabled]="!toggleLogin"
+                        *ngIf="toggleLogin"
+                    >
+                        Login
+                    </button>
+                    <button
+                        class="button is-link is-light"
+                        (click)="register()"
+                        [disabled]="toggleLogin"
+                        *ngIf="!toggleLogin"
+                    >
+                        Register
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>

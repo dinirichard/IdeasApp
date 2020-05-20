@@ -1,0 +1,32 @@
+.top-profile {
+    z-index: 100px;
+    offset: relative;
+    top: -200px;
+    padding-left: 60px;
+    padding-right: 60px;
+}
+
+.notification {
+    height: 300px;
+}
+
+// .info-slant{
+//     height: 100%;
+//     width: 60%;
+//     z-index: -1;
+//     background: purple;
+// }
+
+// .info-slant::after{
+//     position: absolute;
+//     width: 60%;
+//     height: inherit;
+//     content: 'sdsdsdsds';
+//     background: inherit;
+//     top: 0;
+//     right: 0;
+//     left: 0;
+//     bottom: 0;
+//     transform-origin: top center;
+//     transform: skew(-4deg);
+// }

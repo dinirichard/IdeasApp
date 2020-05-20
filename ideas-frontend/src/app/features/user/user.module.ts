@@ -9,20 +9,29 @@ import { UiModule } from '@app/ui.module';
 import { UserEffects } from './state/user.effects';
 import { userReducer } from './state/user.reducer';
 import { UsersComponent } from './users/users.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+// import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { UuidGuard } from '@app/services/uuid.guard';
+import { DateAgoPipe } from '@app/services/date-ago.pipe';
 
 const routes: Routes = [
-  { path: '', component: UsersComponent }
+    { path: '', component: UsersComponent },
+    {
+        path: 'profile',
+        component: UserProfileComponent,
+    },
 ];
 
 @NgModule({
-  declarations: [UsersComponent],
-  imports: [
-    CommonModule,
-    MaterialModule,
-    UiModule,
-    RouterModule.forChild(routes),
-    StoreModule.forFeature('users', userReducer),
-    EffectsModule.forFeature([UserEffects]),
-  ]
+    declarations: [UsersComponent, UserProfileComponent],
+    imports: [
+        CommonModule,
+        MaterialModule,
+        UiModule,
+        RouterModule.forChild(routes),
+        StoreModule.forFeature('users', userReducer),
+        EffectsModule.forFeature([UserEffects]),
+        // InfiniteScrollModule,
+    ],
 })
-export class UserModule { }
+export class UserModule {}

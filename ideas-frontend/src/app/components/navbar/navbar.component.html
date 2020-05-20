@@ -26,10 +26,15 @@
 
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-
+            <a class="navbar-item" routerLink="/users/profile">
+                Profile 1
+            </a>
         </div>
 
         <div class="navbar-end">
+            <a class="navbar-item" routerLink="/users/profile">
+                Profile
+            </a>
             <div class="navbar-item">
                 <div class="buttons">
                     <a class="button is-primary" *ngIf="token !== null" routerLink="/auth">

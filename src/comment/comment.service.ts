@@ -14,90 +14,111 @@ import { UserRO } from 'src/user/dto/user.res.dto';
 
 @Injectable()
 export class CommentService {
-    constructor(
-        @InjectModel('Comment') private readonly commentModel: Model<Comment>,
-        @InjectModel('Idea') private readonly ideaModel: Model<Idea>,
-        @InjectModel('User') private readonly userModel: Model<User>,
-        private userService: UserService,
-        private ideaService: IdeaService,
-    ) { }
+  constructor(
+    @InjectModel('Comment') private readonly commentModel: Model<Comment>,
+    @InjectModel('Idea') private readonly ideaModel: Model<Idea>,
+    @InjectModel('User') private readonly userModel: Model<User>,
+    private userService: UserService,
+    private ideaService: IdeaService,
+  ) {}
 
-    async showByIdea(idea: string, page: number = 1) {
-        const comments = await this.commentModel.find()
-            .where({ idea })
-            .limit(15 * page)
-            // .sort({ created: 'desc' })
-            .populate('author', '-password');
+  async showByIdea(idea: string, page: number = 1) {
+    const comments = await this.commentModel
+      .find()
+      .where({ idea })
+      .sort({ created: 'desc' })
+      .limit(15 * page)
+      .populate('author', '-password');
 
-        return comments.map(comment =>
-            this.toResponseObject(comment));
+    return comments.map(comment => this.toResponseObject(comment));
+  }
+
+  async showByUser(id: string, page: number = 1) {
+    const comments = await this.commentModel
+      .find({ author: id })
+      .limit(25)
+      .skip(25 * (page - 1))
+      .populate('author', '-password')
+      .populate('idea');
+
+    return comments.map(comment => this.toResponseObject(comment));
+  }
+
+  async show(id: string) {
+    const comment = await this.commentModel
+      .findById(id)
+      .populate('author', '-password');
+    return this.toResponseObject(comment);
+  }
+
+  async createComment(ideaId: string, userId: string, data: CommentDTO) {
+    const idea = await this.ideaModel.findById(ideaId);
+    const user = await this.userModel.findById(userId);
+
+    const comment = new this.commentModel({
+      ...data,
+      idea,
+      author: user,
+    });
+
+    idea.comments.push(comment);
+
+    await idea.save();
+    await comment.save();
+
+    comment.populate('author', '-password');
+
+    return this.toResponseObject(comment);
+  }
+
+  async destroy(id: string, userId: string) {
+    const comment = await this.commentModel
+      .findById(id)
+      .populate('author', '-password')
+      .populate('idea', '-author');
+
+    if (comment.author.id !== userId) {
+      throw new HttpException(
+        'You do not own this comment',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
-    async showByUser(id: string, page: number = 1) {
-        const comments = await this.commentModel.find({ author: id })
-            .limit(25).skip(25 * (page - 1))
-            .populate('author', '-password')
-            .populate('idea');
+    await this.commentModel.deleteOne(comment);
+    return comment;
+  }
 
-        return comments.map(comment => this.toResponseObject(comment));
+  private toResponseObject(comment: Comment): CommentRO {
+    const checkForIdea = comment.idea.toString().split(':');
+    const checkForAuthor = comment.author.toString().split(':');
+
+    const responseObject: CommentRO = {
+      id: comment.id,
+      created: comment.created,
+      text: comment.text,
+    };
+
+    if (checkForAuthor.length > 2) {
+      responseObject.author = comment.author.responseFormat();
     }
 
-    async show(id: string) {
-        const comment = await this.commentModel.findById(id)
-            .populate('author', '-password');
-        return this.toResponseObject(comment);
+    if (checkForIdea.length > 2) {
+      responseObject.idea = comment.idea.responseFormat();
     }
 
-    async createComment(ideaId: string, userId: string, data: CommentDTO) {
-        const idea = await this.ideaModel.findById(ideaId);
-        const user = await this.userModel.findById(userId);
+    return responseObject;
+  }
 
-        const comment = new this.commentModel({
-            ...data,
-            idea,
-            author: user,
-        });
+  private toResponseObjectGen(comment: Comment): CommentRO {
+    const checkForIdea = comment.idea.toString().split(':');
+    const checkForAuthor = comment.author.toString().split(':');
 
-        idea.comments.push(comment);
+    const responseObject: CommentRO = {
+      id: comment.id,
+      created: comment.created,
+      text: comment.text,
+    };
 
-        await idea.save();
-
-        comment.populate('author', '-password');
-
-        return this.toResponseObject(comment);
-    }
-
-    async destroy(id: string, userId: string) {
-        const comment = await this.commentModel.findById(id)
-            .populate('author', '-password')
-            .populate('idea', '-author');
-
-        if (comment.author.id !== userId) {
-            throw new HttpException('You do not own this comment', HttpStatus.UNAUTHORIZED);
-        }
-
-        await this.commentModel.deleteOne(comment);
-        return comment;
-    }
-
-    private toResponseObject(comment: Comment): CommentRO {
-        const checkForIdea = comment.idea.toString().split(':');
-        const checkForAuthor = comment.author.toString().split(':');
-
-        const responseObject: CommentRO = {
-            id: comment.id,
-            created: comment.created,
-            text: comment.text,
-        };
-
-        if (checkForAuthor.length > 2) {
-            responseObject.author = comment.author.responseFormat();
-        }
-
-        if (checkForIdea.length > 2) {
-            responseObject.idea = comment.idea.responseFormat();
-        }
-        return responseObject;
-    }
-
+    return responseObject;
+  }
 }

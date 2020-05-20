@@ -1,28 +1,27 @@
 <section class="section">
     <div class="columns is-vcentered">
         <div
-            class="column space-column is-0-mobile is-1-tablet is-one-fifth-desktop is-one-fifth-widescreen is-one-fifth-fullhd">
-        </div>
+            class="column space-column is-0-mobile is-1-tablet is-one-fifth-desktop is-one-fifth-widescreen is-one-fifth-fullhd"
+        ></div>
 
         <div class="column content-column ">
             <mat-card class="mat-card-ideas">
-
                 <article class="media">
                     <figure class="media-left">
                         <div class="icon-bar" style="align-items: center;">
                             <span class="icon is-medium">
                                 <a (click)="upvote(idea.id)">
-                                    <i class="material-icons md-36">
+                                    <i class="material-icons md-36 arrows">
                                         keyboard_arrow_up
                                     </i>
                                 </a>
                             </span>
                             <p style="text-align: center;">
-                                {{ idea.upvotes - idea.downvotes || 0}}
+                                {{ idea.upvotes - idea.downvotes || 0 }}
                             </p>
                             <span class="icon is-medium">
                                 <a (click)="downvote(idea.id)">
-                                    <i class="material-icons md-36">
+                                    <i class="material-icons md-36 arrows">
                                         keyboard_arrow_down
                                     </i>
                                 </a>
@@ -31,32 +30,48 @@
                     </figure>
                     <div class="media-content">
                         <div class="content">
-                            <p>
-                                <!-- <a> -->
-                                <strong [routerLink]="['/ideas', idea.id]">{{idea.idea}}</strong>
-                                <!-- </a> -->
-                                <br>
+                            <p class="content__title">
+                                <a>
+                                    <strong
+                                        [routerLink]="['/ideas', idea.id]"
+                                        >{{ idea.idea }}</strong
+                                    >
+                                </a>
+                            </p>
+                            <p class="content__desc">
                                 {{ idea.description }}
                             </p>
                         </div>
                         <nav class="level is-mobile">
                             <div class="level-left">
                                 By &nbsp;
-                                <span class="has-text-warning">
-                                    {{ idea.author.username}} &nbsp;
+                                <span class="clickable">
+                                    {{ idea.author.username }} &nbsp;
                                 </span>
-                                {{idea.created | dateAgo}} &nbsp;&nbsp;
+                                {{ idea.created | dateAgo }} &nbsp;&nbsp;
                             </div>
-                            <div class="level-right has-text-warning" style="padding-right: 10px; ">
-                                <a>
+                            <div
+                                class="level-right has-text-warning"
+                                style="padding-right: 10px; "
+                            >
+                                <a [routerLink]="['/ideas', idea.id]">
                                     <span class="icon is-medium">
-                                        <span class="fa-stack is-primary" style=" text-align: center;">
-                                            <i class="far fa-comment-alt fa-stack-2x"></i>
-                                            <i class="far"
-                                                style="color: black;">{{idea.comments ? idea.comments.length : 0}}</i>
+                                        <span
+                                            class="fa-stack is-primary"
+                                            style=" text-align: center;"
+                                        >
+                                            <i
+                                                class="far fa-comment-alt fa-stack-2x"
+                                            ></i>
+                                            <i class="far comment-num"
+                                                >{{
+                                                    idea.commentNo
+                                                        ? idea.commentNo
+                                                        : 0
+                                                }}
+                                            </i>
                                         </span>
                                     </span>
-
                                 </a>
                             </div>
                         </nav>
@@ -72,20 +87,32 @@
             <article class="media" style="width: 600px;">
                 <figure class="media-left">
                     <p class="image is-64x64">
-                        <img src="https://bulma.io/images/placeholders/128x128.png">
+                        <img
+                            src="https://bulma.io/images/placeholders/128x128.png"
+                        />
                     </p>
                 </figure>
-                <form class="media-content" [formGroup]="commentForm" (ngSubmit)="submitComment()">
+                <form
+                    class="media-content"
+                    [formGroup]="commentForm"
+                    (ngSubmit)="submitComment()"
+                >
                     <div class="field">
                         <p class="control">
-                            <textarea class="textarea" rows="2" placeholder="Add a comment..."
-                                formControlName="text"></textarea>
+                            <textarea
+                                class="textarea"
+                                rows="2"
+                                placeholder="Add a comment..."
+                                formControlName="text"
+                            ></textarea>
                         </p>
                     </div>
                     <nav class="level">
                         <div class="level-left">
                             <div class="level-item">
-                                <button class="button is-info" type="submit">Submit</button>
+                                <button class="button is-info" type="submit">
+                                    Submit
+                                </button>
                             </div>
                         </div>
                         <div class="level-right">
@@ -99,33 +126,46 @@
                 </form>
             </article>
 
-            <div *ngFor="let comment of comments | async | reverse">
-
+            <div *ngFor="let comment of comments | async">
                 <mat-divider></mat-divider>
 
-                <article class="media">
+                <article class="media comments">
                     <figure class="media-left">
                         <p class="image is-64x64">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <img
+                                src="https://bulma.io/images/placeholders/128x128.png"
+                            />
                         </p>
                     </figure>
                     <div class="media-content">
                         <div class="content">
                             <p>
-                                <strong>{{ comment.author? comment.author.username : "Test check"}}</strong>
-                                <br>
+                                <strong>{{
+                                    comment.author
+                                        ? comment.author.username
+                                        : 'Test check'
+                                }}</strong>
+                                <br />
                                 {{ comment.text }}
-                                <br>
-                                <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+                                <br />
+                                <small
+                                    ><a>Like</a> · <a>Reply</a> · 3 hrs</small
+                                >
                             </p>
                         </div>
                     </div>
                 </article>
             </div>
+
+            <div class="load-comments" *ngIf="loadComment">
+                <a (click)="loadMoreComments()">
+                    Load more comments
+                </a>
+            </div>
         </div>
 
         <div
-            class="column is-narrow-mobile ad-column is-one-fifth-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd">
-        </div>
+            class="column is-narrow-mobile ad-column is-one-fifth-tablet is-one-third-desktop is-one-third-widescreen is-one-third-fullhd"
+        ></div>
     </div>
 </section>

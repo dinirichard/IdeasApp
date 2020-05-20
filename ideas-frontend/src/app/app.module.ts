@@ -15,32 +15,29 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { UuidGuard } from './services/uuid.guard';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { DateAgoPipe } from './services/date-ago.pipe';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AuthComponent,
-    NavbarComponent,
-
-  ],
-  imports: [
-    AppRoutingModule,
-    AppStoreModule,
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    UiModule,
-    MaterialModule,
-    BrowserAnimationsModule,
-    ToastrModule.forRoot({
-      timeOut: 5000,
-      positionClass: 'toast-bottom-right',
-      preventDuplicates: true,
-    })
-  ],
-  providers: [AuthService, ApiService, UuidGuard],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent, AuthComponent, NavbarComponent],
+    imports: [
+        AppRoutingModule,
+        AppStoreModule,
+        BrowserModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        UiModule,
+        MaterialModule,
+        BrowserAnimationsModule,
+        InfiniteScrollModule,
+        ToastrModule.forRoot({
+            timeOut: 5000,
+            positionClass: 'toast-bottom-right',
+            preventDuplicates: true,
+        }),
+    ],
+    providers: [AuthService, ApiService, UuidGuard],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
