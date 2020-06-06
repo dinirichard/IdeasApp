@@ -11,6 +11,7 @@ import { Idea } from '@app/models/idea';
 import { Observable } from 'rxjs';
 import { Entity } from '@app/models/entity';
 import { selectAllIdeas, selectIdeaLoader } from '../state/idea.selector';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
     selector: 'app-ideas',
@@ -20,7 +21,7 @@ import { selectAllIdeas, selectIdeaLoader } from '../state/idea.selector';
 export class IdeasComponent implements OnInit {
     ideas: Observable<Idea[]>;
     loading$: Observable<boolean>;
-    constructor(private store: Store<AppState>) {}
+    constructor(private store: Store<AppState>, public dialog: MatDialog) {}
 
     ngOnInit() {
         this.store.dispatch(new LoadIdeas());
@@ -42,4 +43,20 @@ export class IdeasComponent implements OnInit {
         console.log('Srolling Down!!');
         this.store.dispatch(new LoadMoreIdeas(2));
     }
+
+
+    // openDialog() {
+    //     const dialogRef = this.dialog.open(DialogNewIdeaComponent);
+
+    //     dialogRef.afterClosed().subscribe(result => {
+    //         console.log(`Dialog result: ${result}`);
+    //     });
+    // }
 }
+
+@Component({
+    selector: 'app-dialog-new-idea',
+    templateUrl: './dialog-new-idea.html',
+    styleUrls: ['./dialog-new-idea.scss'],
+})
+export class DialogNewIdeaComponent { }

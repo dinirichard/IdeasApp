@@ -8,7 +8,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '@app/material/material.module';
 import { UiModule } from '@app/ui.module';
-import { IdeasComponent } from './ideas/ideas.component';
+import { IdeasComponent, DialogNewIdeaComponent } from './ideas/ideas.component';
 import { IdeaEffects } from './state/idea.effects';
 import { ideaReducer } from './state/idea.reducer';
 import { SelectedIdeaComponent } from './selected-idea/selected-idea.component';
@@ -40,7 +40,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    declarations: [IdeasComponent, SelectedIdeaComponent, NewIdeaComponent],
+    declarations: [IdeasComponent, SelectedIdeaComponent, NewIdeaComponent, DialogNewIdeaComponent],
     imports: [
         CommonModule,
         MaterialModule,
