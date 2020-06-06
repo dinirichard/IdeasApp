@@ -13,6 +13,9 @@ import { Entity } from '@app/models/entity';
 import { selectAllIdeas, selectIdeaLoader } from '../state/idea.selector';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { validateWhitespace } from '@app/utilities/validators';
+
 @Component({
     selector: 'app-ideas',
     templateUrl: './ideas.component.html',
@@ -21,12 +24,19 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dial
 export class IdeasComponent implements OnInit {
     ideas: Observable<Idea[]>;
     loading$: Observable<boolean>;
-    constructor(private store: Store<AppState>, public dialog: MatDialog) {}
+    newIdeaForm: FormGroup;
+
+    constructor(private fb: FormBuilder, private store: Store<AppState>, public dialog: MatDialog) {}
 
     ngOnInit() {
         this.store.dispatch(new LoadIdeas());
         this.ideas = this.store.select(selectAllIdeas);
         this.loading$ = this.store.select(selectIdeaLoader);
+
+        this.newIdeaForm = this.fb.group({
+            topic: this.fb.control('', [validateWhitespace, Validators.required]),
+            summary: this.fb.control('', [validateWhitespace, Validators.required]),
+        });
     }
 
     upvote(ideaId: string) {
@@ -44,6 +54,9 @@ export class IdeasComponent implements OnInit {
         this.store.dispatch(new LoadMoreIdeas(2));
     }
 
+    newIdeaSubmit() {
+        
+    }
 
     // openDialog() {
     //     const dialogRef = this.dialog.open(DialogNewIdeaComponent);

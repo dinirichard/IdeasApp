@@ -112,8 +112,8 @@
     </div>
 </section>
 
-<div class="add-ideas" href="#popup">
-    <a class="add-ideas__icon" >
+<div class="add-ideas" id="add-ideas">
+    <a href="ideas#popup" class="add-ideas__icon" >
         Ideas
     </a>
 </div>
@@ -122,26 +122,53 @@
             <div class="popup__content">
                 <div class="popup__left">
                     <img
-                        src="img/nat-8.jpg"
-                        alt="Tour photo"
-                        class="popup__img"
-                    />
-                    <img
-                        src="img/nat-9.jpg"
+                        src="../../../../assets/purple-bulb-vert.jpeg"
                         alt="Tour photo"
                         class="popup__img"
                     />
                 </div>
 
                 <div class="popup__right">
-                    <a href="#section-tours" class="popup__close">&times;</a>
+                    <a href="ideas#add-ideas" class="popup__close">&times;</a>
                     <h2 class="heading-secondary u-margin-bottom-small">
                         Start booking now
                     </h2>
                     <h3 class="heading-tertiary u-margin-bottom-small">
                         Important &ndash; Please read these terms before booking
                     </h3>
-                    <p class="popup__text">
+
+                    <form action="" class="popup__form" [formGroup]="newIdeaForm"
+                    (ngSubmit)="newIdeaSubmit()">
+                        <div class="form__group">
+                            <input
+                                    type="text"
+                                    class="form__input"
+                                    placeholder="Topic"
+                                    formControlName="topic"
+                                    id="topic"
+                                    required
+                            />
+                            <label for="name" class="form__label"
+                                    >Topic</label
+                            >
+                        </div>
+
+                        <div class="form__group">
+                            <textarea
+                                    type="text"
+                                    class="form__input"
+                                    rows="4"
+                                    placeholder="Include summary..."
+                                    formControlName="summary"
+                                    id="summary"
+                                    required
+                            ></textarea>
+                            <label for="name" class="form__label"
+                                    >Summary</label
+                            >
+                        </div>
+                    </form>
+                    <!-- <p class="popup__text">
                         Lorem ipsum dolor sit amet consectetur adipisicing elit.
                         Fuga, sit repudiandae! Ipsum autem voluptatibus corrupti
                         deserunt eaque et quae? Similique, non? Quas nesciunt
@@ -151,7 +178,7 @@
                         suscipit adipisci sint minus, earum magnam? Earum vero
                         laborum voluptatum quaerat ratione quisquam illum.
                         Temporibus, obcaecati.
-                    </p>
+                    </p> -->
                     <a href="#section-tours" class="btn btn--green">Book now</a>
                 </div>
             </div>

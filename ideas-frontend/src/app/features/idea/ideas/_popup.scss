@@ -1,5 +1,31 @@
+$color_darkblue: #071e3d;
+$color_blue_violet: #1f4287;
+$color_bluish_cian: #278ea5;
+$color_greenish_cian: #21e6c1;
+
+
+$color-grey-light-1: #f7f7f7;
+$color-grey-light-2: #eee;
+
+$color-grey-dark: #777;
+$color-grey-dark-2: #999;
+$color-grey-dark-3: #333;
+
+$color-white: #fff;
+$color-black: #000;
+
+// FONTS
+$font-size-default: 1.6rem;
+
+@mixin absCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
 .popup {
-    background-color: rgba($color-black, 0.85);
+    background-color: rgba(#000, 0.85);
     height: 100vh;
     width: 100%;
     position: fixed;
@@ -19,7 +45,7 @@
 
         // height: 70%;
         background-color: $color-white;
-        box-shadow: 0 2rem 4rem rgba($color-black, 0.85);
+        box-shadow: 0 2rem 4rem rgba(#000, 0.85);
         border-radius: 3px;
         display: table;
         overflow: hidden;
@@ -68,7 +94,7 @@
     // .popup__img
     &__img {
         display: block;
-        width: 66.666666666%;
+        // width: 66.666666666%;
 
         // @include respond(tab-port) {
         //     // display: inline-flex;
@@ -119,7 +145,118 @@
         }
 
         &:hover {
-            color: $color-primary;
+            color: #071e3d;
         }
     }
 }
+
+.form {
+    &__group:not(:last-child) {
+        margin-bottom: 2rem;
+    }
+
+    &__input {
+        font-size: 1.5rem;
+        font-family: inherit;
+        padding: 1.5rem 2rem;
+        border-radius: 2px;
+        background-color: rgba($color_greenish_cian, 0.5);
+        border-bottom: 3px solid transparent;
+        border: none;
+        width: 90%;
+        display: block;
+
+        
+
+        // @include respond(tab-port) {
+        //     width: 100%;
+        // }
+
+        &:focus {
+            outline: none;
+            box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
+            border-bottom: 3px solid $color_darkblue;
+        }
+
+        &:focus:invalid {
+            border-bottom: 3px solid red;
+        }
+
+        &::-webkit-input-placeholder {
+            color: $color-grey-dark-2;
+        }
+    }
+
+    &__label {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-left: 2rem;
+        margin-top: 0.7rem;
+        display: block;
+        transition: all 0.3s;
+    }
+
+    // + is Adjacent sibling selector(next selector)
+    &__input:placeholder-shown + &__label {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-4rem);
+    }
+
+    &__radio-group {
+        width: 49%;
+        display: inline-block;
+
+        // @include respond(tab-port) {
+        //     width: 100%;
+        //     margin-bottom: 2rem;
+        // }
+    }
+
+    &__radio-input {
+        display: none;
+    }
+
+    &__radio-label {
+        font-size: $font-size-default;
+        cursor: pointer;
+        position: relative;
+        padding-left: 4.5rem;
+    }
+
+    &__radio-button {
+        height: 3rem;
+        width: 3rem;
+        border: 5px solid $color-darkblue;
+        border-radius: 50%;
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: -0.1rem;
+        // padding-left: 5rem;
+
+        &::after {
+            content: '';
+            display: block;
+            height: 1rem;
+            width: 1rem;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: $color-darkblue;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+    }
+
+    &__radio-input:checked ~ &__radio-label &__radio-button::after {
+        opacity: 1;
+    }
+}
+
+
+textarea {
+            resize: none;
+        }
