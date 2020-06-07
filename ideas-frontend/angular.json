@@ -38,6 +38,11 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/bulma/bulma.sass"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles"
+              ]
+            },
             "scripts": []
           },
           "configurations": {

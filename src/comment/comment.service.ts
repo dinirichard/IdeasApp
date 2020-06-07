@@ -20,7 +20,7 @@ export class CommentService {
     @InjectModel('User') private readonly userModel: Model<User>,
     private userService: UserService,
     private ideaService: IdeaService,
-  ) {}
+  ) { }
 
   async showByIdea(idea: string, page: number = 1) {
     const comments = await this.commentModel
@@ -34,8 +34,9 @@ export class CommentService {
   }
 
   async showByUser(id: string, page: number = 1) {
+    const user = await this.userModel.findById(id);
     const comments = await this.commentModel
-      .find({ author: id })
+      .find({ author: user })
       .limit(25)
       .skip(25 * (page - 1))
       .populate('author', '-password')

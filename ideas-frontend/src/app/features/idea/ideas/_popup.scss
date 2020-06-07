@@ -1,28 +1,5 @@
-$color_darkblue: #071e3d;
-$color_blue_violet: #1f4287;
-$color_bluish_cian: #278ea5;
-$color_greenish_cian: #21e6c1;
-
-
-$color-grey-light-1: #f7f7f7;
-$color-grey-light-2: #eee;
-
-$color-grey-dark: #777;
-$color-grey-dark-2: #999;
-$color-grey-dark-3: #333;
-
-$color-white: #fff;
-$color-black: #000;
-
-// FONTS
-$font-size-default: 1.6rem;
-
-@mixin absCenter {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
 
 .popup {
     background-color: rgba(#000, 0.85);
@@ -41,7 +18,7 @@ $font-size-default: 1.6rem;
     // .popup__content
     &__content {
         @include absCenter;
-        width: 80%;
+        width: 60%;
 
         // height: 70%;
         background-color: $color-white;
