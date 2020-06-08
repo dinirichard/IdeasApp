@@ -10,7 +10,6 @@ import { AuthService } from '@app/services/auth.service';
 import { ApiService } from '@app/services/api.service';
 import { AppStoreModule } from './store/app-store.module';
 import { AuthComponent } from './components/auth/auth.component';
-import { UiModule } from './ui.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -27,7 +26,6 @@ import { DateAgoPipe } from './services/date-ago.pipe';
         FormsModule,
         ReactiveFormsModule,
         HttpClientModule,
-        UiModule,
         MaterialModule,
         BrowserAnimationsModule,
         InfiniteScrollModule,
@@ -40,4 +38,4 @@ import { DateAgoPipe } from './services/date-ago.pipe';
     providers: [AuthService, ApiService, UuidGuard],
     bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

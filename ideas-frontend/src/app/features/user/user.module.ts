@@ -5,7 +5,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 
 import { MaterialModule } from '@app/material/material.module';
-import { UiModule } from '@app/ui.module';
 import { UserEffects } from './state/user.effects';
 import { userReducer } from './state/user.reducer';
 import { UsersComponent } from './users/users.component';
@@ -27,11 +26,10 @@ const routes: Routes = [
     imports: [
         CommonModule,
         MaterialModule,
-        UiModule,
         RouterModule.forChild(routes),
         StoreModule.forFeature('users', userReducer),
         EffectsModule.forFeature([UserEffects]),
         // InfiniteScrollModule,
     ],
 })
-export class UserModule {}
+export class UserModule { }

@@ -20,6 +20,8 @@ $color-grey-dark-2: #999;
 $color-white: #fff;
 $color-black: #000;
 
+@import 'base/base';
+
 html,
 body {
     height: 100%;

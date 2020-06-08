@@ -7,7 +7,6 @@ import { NgCountPipeModule } from 'angular-pipes';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { MaterialModule } from '@app/material/material.module';
-import { UiModule } from '@app/ui.module';
 import { IdeasComponent, DialogNewIdeaComponent } from './ideas/ideas.component';
 import { IdeaEffects } from './state/idea.effects';
 import { ideaReducer } from './state/idea.reducer';
@@ -45,7 +44,6 @@ const routes: Routes = [
         CommonModule,
         MaterialModule,
         InfiniteScrollModule,
-        UiModule,
         NgCountPipeModule,
         RouterModule.forChild(routes),
         StoreModule.forFeature('ideas', ideaReducer),
@@ -53,4 +51,4 @@ const routes: Routes = [
     ],
     providers: [IdeaResolver],
 })
-export class IdeaModule {}
+export class IdeaModule { }

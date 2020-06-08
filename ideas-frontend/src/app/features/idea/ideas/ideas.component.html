@@ -112,11 +112,9 @@
     </div>
 </section>
 
-<div class="add-ideas" id="add-ideas">
-    <a href="ideas#popup" class="add-ideas__icon" >
-        Ideas
-    </a>
-</div>
+<a href="ideas#popup" class="add-ideas" id="add-ideas" data-tooltip="Add New Idea">
+    <i class="add-ideas__icon fa fa-plus fa-3x" aria-hidden="true"></i>
+</a>
 
 <div class="popup" id="popup">
             <div class="popup__content">
@@ -130,12 +128,12 @@
 
                 <div class="popup__right">
                     <a href="ideas#add-ideas" class="popup__close">&times;</a>
-                    <h2 class="heading-secondary u-margin-bottom-small">
-                        Start booking now
+                    <h2 class="heading-secondary--mini u-margin-bottom-small" style="text-align: center;">
+                        Add Idea
                     </h2>
-                    <h3 class="heading-tertiary u-margin-bottom-small">
+                    <!-- <h3 class="heading-tertiary u-margin-bottom-small">
                         Important &ndash; Please read these terms before booking
-                    </h3>
+                    </h3> -->
 
                     <form action="" class="popup__form" [formGroup]="newIdeaForm"
                     (ngSubmit)="newIdeaSubmit()">
@@ -179,7 +177,7 @@
                         laborum voluptatum quaerat ratione quisquam illum.
                         Temporibus, obcaecati.
                     </p> -->
-                    <a href="#section-tours" class="btn btn--green">Book now</a>
+                    <a href="#section-tours" class="btn btn--green" style="text-align: center;">Post Idea</a>
                 </div>
             </div>
         </div>

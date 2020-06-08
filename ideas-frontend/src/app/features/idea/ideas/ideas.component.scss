@@ -1,11 +1,6 @@
-$color_darkblue: #071e3d;
-$color_blue_violet: #3d5af1;
-$color_bluish_cian: #278ea5;
-$color_greenish_cian: #21e6c1;
-$color_pink: #c9b38f;
+@import 'abstracts/variables';
+@import 'abstracts/mixins';
 
-$font_clr_prm: white;
-$font_clr_sec: #e2f3f5;
 
 .buttons-bar {
     -webkit-box-shadow: 0 0 10px rgb(0, 0, 0);
@@ -44,6 +39,7 @@ mat-card.mat-card-ideas.mat-card {
 .center-list {
     align-items: center;
 }
+
 is-grouped-centered {
     align-items: center;
 }
@@ -151,11 +147,20 @@ is-grouped-centered {
     position: fixed;
     bottom: 10px;
     right: 400px;
-    background-color: orangered;
+    background-color: transparent;
     display: inline-block;
-    clip-path: circle(50% at 50% 50%);
-    height: 4rem;
-    width: 4rem;
+    height: 3rem;
+    width: 3rem;
+    // clip-path: circle(50% at 50% 50%);
+    border: 2px solid red; 
+    border-radius:50%;
+    -moz-border-radius:50%;
+    -webkit-border-radius:50%;
+
+    &__icon {
+        @include absCenter;
+        color: green;
+    }
 }
 
 @import 'popup';

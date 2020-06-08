@@ -1,5 +1,8 @@
 @import 'abstracts/variables';
 @import 'abstracts/mixins';
+@import 'base/base';
+@import 'base/typography';
+@import 'components/button';
 
 .popup {
     background-color: rgba(#000, 0.85);
@@ -18,7 +21,7 @@
     // .popup__content
     &__content {
         @include absCenter;
-        width: 60%;
+        width: 70%;
 
         // height: 70%;
         background-color: $color-white;
@@ -54,7 +57,7 @@
         width: 66.666666666%;
         display: table-cell;
         vertical-align: middle;
-        padding: 3rem 5rem;
+        padding: 1rem 1.5rem;
 
         // @include respond(tab-port) {
         //     height: 100%;
@@ -112,9 +115,9 @@
         &:visited {
             color: $color-grey-dark;
             position: absolute;
-            top: 2.5rem;
-            right: 2.5rem;
-            font-size: 3rem;
+            top: 1.56rem;
+            right: 1.56rem;
+            font-size: 1.875rem;
             text-decoration: none;
             display: inline-block;
             transition: all 0.2s;
@@ -129,13 +132,13 @@
 
 .form {
     &__group:not(:last-child) {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
 
     &__input {
-        font-size: 1.5rem;
+        font-size: 1rem;
         font-family: inherit;
-        padding: 1.5rem 2rem;
+        padding: 0.5rem 0.8rem;
         border-radius: 2px;
         background-color: rgba($color_greenish_cian, 0.5);
         border-bottom: 3px solid transparent;
@@ -152,7 +155,7 @@
         &:focus {
             outline: none;
             box-shadow: 0 1rem 2rem rgba($color-black, 0.1);
-            border-bottom: 3px solid $color_darkblue;
+            border-bottom: 3px solid green;
         }
 
         &:focus:invalid {
@@ -165,10 +168,10 @@
     }
 
     &__label {
-        font-size: 1.2rem;
-        font-weight: 700;
-        margin-left: 2rem;
-        margin-top: 0.7rem;
+        font-size: 1rem;
+        font-weight: 500;
+        margin-left: 0.8rem;
+        margin-top: 0.5rem;
         display: block;
         transition: all 0.3s;
     }
