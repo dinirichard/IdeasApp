@@ -30,7 +30,7 @@ parameters:
   type: step
   default:
     script: |
-      cd frontend-ng/
+      cd ideas-frontend/
       sudo npm install -g @angular/cli
       npm install
       export CI=1
