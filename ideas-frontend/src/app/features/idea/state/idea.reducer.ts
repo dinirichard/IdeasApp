@@ -15,7 +15,7 @@ const initialState: IdeaState = {
     selectedIdeaComments: null,
 };
 
-export const ideaReducer: (state: IdeaState, action: MyAction) => IdeaState = (
+const _ideaReducer: (state: IdeaState, action: MyAction) => IdeaState = (
     state = initialState,
     action,
 ) => {
@@ -151,3 +151,7 @@ export const ideaReducer: (state: IdeaState, action: MyAction) => IdeaState = (
             return state;
     }
 };
+
+export function ideaReducer(state, action) {
+    return _ideaReducer(state, action);
+}

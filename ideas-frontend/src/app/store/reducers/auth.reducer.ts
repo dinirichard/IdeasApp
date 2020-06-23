@@ -14,7 +14,7 @@ const initialState: AuthState = {
     loaded: false
 };
 
-export const authReducer: (state: AuthState, action: MyAction)
+const _authReducer: (state: AuthState, action: MyAction)
     => AuthState = (
         state = initialState,
         action: MyAction,
@@ -32,3 +32,7 @@ export const authReducer: (state: AuthState, action: MyAction)
                 return state;
         }
     };
+
+export function authReducer(state, action) {
+    return _authReducer(state, action);
+}

@@ -8,7 +8,7 @@ const initialState: UserState = {
     page: 0
 };
 
-export const userReducer: (state: UserState, action: MyAction) => UserState = (
+export const _userReducer: (state: UserState, action: MyAction) => UserState = (
     state: UserState = initialState,
     action: MyAction
 ) => {
@@ -28,3 +28,8 @@ export const userReducer: (state: UserState, action: MyAction) => UserState = (
             return state;
     }
 };
+
+export function userReducer(state, action) {
+    return _userReducer(state, action);
+}
+

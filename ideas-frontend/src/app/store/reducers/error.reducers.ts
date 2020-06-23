@@ -9,7 +9,7 @@ const initialState: ErrorState = {
     error: null
 };
 
-export const errorReducer: (state: ErrorState, action: MyAction)
+const _errorReducer: (state: ErrorState, action: MyAction)
     => ErrorState = (
         state = initialState,
         action: MyAction
@@ -24,3 +24,8 @@ export const errorReducer: (state: ErrorState, action: MyAction)
                 return state;
         }
     };
+
+
+export function errorReducer(state, action) {
+    return _errorReducer(state, action);
+}
