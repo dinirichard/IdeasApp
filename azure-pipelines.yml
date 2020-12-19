@@ -8,9 +8,7 @@ trigger:
 
 variables:
 - group: DanielKeysVaultGroup
-  # Azure service connection established during pipeline creation
-  azureSubscription: service-connection-rm
-  appName: ideasapp-api
+- group: IdeasVariableGroup
 
 pool:
   vmImage: 'ubuntu-latest'
