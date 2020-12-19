@@ -10,6 +10,7 @@ variables:
   # Azure service connection established during pipeline creation
   azureSubscription: service-connection-rm
   appName: ideasapp-api
+- group: DanielKeysVault
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -34,10 +35,10 @@ parameters:
       sudo npm install -g @angular/cli
       npm install
       export CI=1
-      export CLIENT_ID='4028c136-fdda-4f91-8629-a86c47108a77'
-      export CLIENT_SECRET='mevO.LONBo6vAMhZOwK2NHURlyHxkp6Ty4'
-      export TENANT_ID='8cf3c4eb-960a-4ae9-8093-e276fd7a2351'
-      export AZURE_SUBSCRIPTION_ID="cb89e0ef-6d83-4caf-928e-3804db1d9613"
+      export CLIENT_ID=$(IDEA-CLIENT-ID)
+      export CLIENT_SECRET=$(IDEA-CLIENT-SECRET)
+      export TENANT_ID=$(TENANT-ID)
+      export AZURE_SUBSCRIPTION_ID=$(AZURE-SUBSCRIPTION-ID)
       ng deploy
     displayName: 'install angular and deploy'
 
