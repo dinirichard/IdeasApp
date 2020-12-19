@@ -10,7 +10,8 @@ variables:
 - group: DanielKeysVaultGroup
 - group: IdeasVariableGroup
   # Azure service connection established during pipeline creation
-  azureSubscription: service-connection-rm
+- name: azureSubscription
+  value: service-connection-rm
 
 pool:
   vmImage: 'ubuntu-latest'
