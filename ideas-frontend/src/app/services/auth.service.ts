@@ -35,6 +35,10 @@ export class AuthService {
     return this.auth('register', data);
   }
 
+  logout() {
+    this.deleteToken();
+  }
+
   whoami() {
     return this.http.get(`${this.api}/whoami`, {
       headers: { authorization: `Bearer ${this.token}` }

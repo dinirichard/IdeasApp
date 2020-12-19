@@ -15,15 +15,15 @@ export class AuthComponent implements OnInit {
     authForm: FormGroup;
     toggleLogin = true;
 
-    constructor(private fb: FormBuilder, private store: Store<AppState>) {}
+    constructor(private fb: FormBuilder, private store: Store<AppState>) { }
 
     ngOnInit() {
         this.authForm = this.fb.group({
-            username: this.fb.control('', [
+            username: this.fb.control('customer', [
                 Validators.required,
                 validateWhitespace,
             ]),
-            password: this.fb.control('', [
+            password: this.fb.control('customer', [
                 Validators.required,
                 validateWhitespace,
             ]),
@@ -40,7 +40,7 @@ export class AuthComponent implements OnInit {
         this.store.dispatch(new RegisterUser(val));
     }
 
-  toggle() {
-    this.toggleLogin = !this.toggleLogin;
-  }
+    toggle() {
+        this.toggleLogin = !this.toggleLogin;
+    }
 }
